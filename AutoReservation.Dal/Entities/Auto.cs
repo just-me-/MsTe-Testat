@@ -8,15 +8,15 @@ namespace AutoReservation.Dal.Entities
     public abstract class Auto
     {
         [Key]
-        int Id { get; set; }
+        public int Id { get; set; }
         [Required]
-        string Marke { get; set; }
+        public string Marke { get; set; }
         [Timestamp]
-        byte[] Timestamp { get; set; }
+        public byte[] Timestamp { get; set; }
         [Required]
-        int Tagestarif { get; set; }
+        public int Tagestarif { get; set; }
 
-        ICollection<Reservation> Reservationen { get; set; }
+        public ICollection<Reservation> Reservationen { get; set; }
     }
 
 
@@ -27,6 +27,6 @@ namespace AutoReservation.Dal.Entities
     public class LuxusAuto : Auto
     {
         [Required]
-        int Basistarif { get; set; }
+        public int Basistarif { get; set; }
     }
 }

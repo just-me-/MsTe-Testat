@@ -9,17 +9,17 @@ namespace AutoReservation.Dal.Entities
     public class Kunde
     {
         [Key]
-        int Id { get; set; }
+        public int Id { get; set; }
         [Required, MaxLength(500)]
-        string Vorname { get; set; }
+        public string Vorname { get; set; }
         [Required, MaxLength(500)]
-        string Nachname { get; set; }
+        public string Nachname { get; set; }
         [Required]
-        DateTime Geburtsdatum { get; set; }
+        public DateTime Geburtsdatum { get; set; }
         [Timestamp]
-        byte[] Timestamp { get; set; }
+        public byte[] Timestamp { get; set; }
 
-        ICollection<Reservation> Reservationen { get; set; }
+        public ICollection<Reservation> Reservationen { get; set; }
     }
 
 }

@@ -1,0 +1,4 @@
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.TestEnvironment\obj\Debug\net471\AutoReservation.TestEnvironment.csprojAssemblyReference.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.TestEnvironment\obj\Debug\net471\AutoReservation.TestEnvironment.csproj.CoreCompileInputs.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.TestEnvironment\obj\Debug\net471\AutoReservation.TestEnvironment.AssemblyInfoInputs.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.TestEnvironment\obj\Debug\net471\AutoReservation.TestEnvironment.AssemblyInfo.cs
