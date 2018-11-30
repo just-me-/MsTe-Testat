@@ -1,2 +1,2 @@
-Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=Shop;Trusted_Connection=True;"
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=Autoreservation;Trusted_Connection=True;"
 Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model
