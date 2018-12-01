@@ -1,0 +1,4 @@
+/Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.Service.Wcf/obj/Debug/net471/AutoReservation.Service.Wcf.csprojAssemblyReference.cache
+/Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.Service.Wcf/obj/Debug/net471/AutoReservation.Service.Wcf.csproj.CoreCompileInputs.cache
+/Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.Service.Wcf/obj/Debug/net471/AutoReservation.Service.Wcf.AssemblyInfoInputs.cache
+/Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.Service.Wcf/obj/Debug/net471/AutoReservation.Service.Wcf.AssemblyInfo.cs
