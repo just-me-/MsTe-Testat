@@ -17,13 +17,6 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
-##Tom
-.vs/
-*.cache
-*.props
-*.targets
-*project.assets.json
-
 ## Other
 *.moved-aside
 *.xccheckout
