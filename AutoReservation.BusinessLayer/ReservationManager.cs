@@ -12,21 +12,16 @@ namespace AutoReservation.BusinessLayer
         {
             get
             {
-                using (AutoReservationContext context = new AutoReservationContext())
-                {
-                    //  return context.Reservations.ToList();
-                    // Reservationen oder Reservations.....??
-                    return includeReservationReferences(context.Reservationen).ToList());
-                }
+                //  return context.Reservations.ToList();
+                // Reservationen oder Reservations.....??
+                return usingContext(context => includeReservationReferences(context.Reservationen).ToList());
             }
         }
         public Reservation GetReservationById(int reservationsNr)
         {
-            using (AutoReservationContext context = new AutoReservationContext())
-            {
-                return includeReservationReferences(context.Reservationen)
-                        .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr);
-            }
+            return usingContext(includeReservationReferences(context.Reservationen)
+                                 .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr)
+                               );
         }
         public Reservation InsertReservation(Reservation reservation)
         {
