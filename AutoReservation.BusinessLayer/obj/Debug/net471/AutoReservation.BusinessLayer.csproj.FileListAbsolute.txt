@@ -50,3 +50,5 @@
 /Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.BusinessLayer/obj/Debug/net471/AutoReservation.BusinessLayer.csproj.CopyComplete
 /Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.BusinessLayer/obj/Debug/net471/AutoReservation.BusinessLayer.dll
 /Users/marcel/Documents/HSR/3. Semester/Net Technologien/Übungen/99_Miniprojekt/Testat/AutoReservation.BusinessLayer/obj/Debug/net471/AutoReservation.BusinessLayer.pdb
+C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.dll
+C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.pdb

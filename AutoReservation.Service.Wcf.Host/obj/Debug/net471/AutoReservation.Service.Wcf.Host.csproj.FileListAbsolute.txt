@@ -1,0 +1,2 @@
+C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Service.Wcf.Host\bin\Debug\net471\AutoReservation.Service.Wcf.Host.runtimeconfig.json
+C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Service.Wcf.Host\bin\Debug\net471\AutoReservation.Service.Wcf.Host.runtimeconfig.dev.json
