@@ -8,33 +8,30 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoManager : ManagerBase
     {
-        public List<Auto> List
+        public static List<Auto> GetAllAutos()
         {
-            get
-            {
-                return usingContext(context => context.Autos.ToList());
-            }
+            return UsingContext(context => context.Autos.ToList());
         }
-        public Auto GetAutoById(int id)
+        public static Auto GetAutoById(int id)
         {
-            return usingContext(context => context.Autos.FirstOrDefault(auto => auto.Id == id));
+            return UsingContext(context => context.Autos.FirstOrDefault(auto => auto.Id == id));
         }
-        public Auto InsertAuto(Auto auto)
+        public static Auto InsertAuto(Auto auto)
         {
-            return updateAuto(auto, EntityState.Added);
+            return UpdateAuto(auto, EntityState.Added);
         }
-        public Auto UpdateAuto(Auto auto)
+        public static Auto UpdateAuto(Auto auto)
         {
-            return updateAuto(auto, EntityState.Modified);
+            return UpdateAuto(auto, EntityState.Modified);
         }
-        public void DeleteAuto(Auto auto)
+        public static void DeleteAuto(Auto auto)
         {
-            updateAuto(auto, EntityState.Deleted);
+            UpdateAuto(auto, EntityState.Deleted);
         }
 
-        private static Auto updateAuto(Auto value, EntityState state)
+        private static Auto UpdateAuto(Auto value, EntityState state)
         {
-            return updateEntityWithoutReferences(value, state);
+            return UpdateEntityWithoutReferences(value, state);
         }
 
     }

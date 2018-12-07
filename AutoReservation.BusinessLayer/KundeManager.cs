@@ -11,12 +11,12 @@ namespace AutoReservation.BusinessLayer
         {
             get
             {
-                return usingContext(context => context.Kunden.ToList());
+                return UsingContext(context => context.Kunden.ToList());
             }
         }
         public Kunde GetKundeById(int id)
         {
-            return usingContext(context => context.Kunden.FirstOrDefault(kunde => kunde.Id == id));
+            return UsingContext(context => context.Kunden.FirstOrDefault(kunde => kunde.Id == id));
         }
         public Kunde InsertKunde(Kunde kunde)
         {

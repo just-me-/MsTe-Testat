@@ -53,11 +53,11 @@ namespace AutoReservation.BusinessLayer
             // t), aber nicht überlappend gebucht werden.Falls ein Auto nicht verfügbar ist,
             // muss eine AutoUnavailableException ausgelöst werden(noch nicht implementiert).
 
-            return usingContext(context =>
+            return UsingContext(context =>
             {
                 var entry = context.Entry(reservation);
                 entry.State = state;
-                saveChanges(context, reservation);
+                SaveChanges(context, reservation);
 
                 if (entry.State != EntityState.Detached)
                 {

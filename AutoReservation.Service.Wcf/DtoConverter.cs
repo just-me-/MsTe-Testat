@@ -24,7 +24,7 @@ namespace AutoReservation.Service.Wcf
             auto.Id = dto.Id;
             auto.Marke = dto.Marke;
             auto.Tagestarif = dto.Tagestarif;
-            auto.RowVersion = dto.RowVersion;
+            auto.Timestamp = dto.Timestamp;
 
             if (auto is LuxusklasseAuto)
             {
@@ -41,7 +41,7 @@ namespace AutoReservation.Service.Wcf
                 Id = entity.Id,
                 Marke = entity.Marke,
                 Tagestarif = entity.Tagestarif,
-                RowVersion = entity.RowVersion
+                Timestamp = entity.Timestamp
             };
 
             if (entity is StandardAuto) { dto.AutoKlasse = AutoKlasse.Standard; }
@@ -75,7 +75,7 @@ namespace AutoReservation.Service.Wcf
                 Nachname = dto.Nachname,
                 Vorname = dto.Vorname,
                 Geburtsdatum = dto.Geburtsdatum,
-                RowVersion = dto.RowVersion
+                Timestamp = dto.Timestamp
             };
         }
         public static KundeDto ConvertToDto(this Kunde entity)
@@ -88,7 +88,7 @@ namespace AutoReservation.Service.Wcf
                 Nachname = entity.Nachname,
                 Vorname = entity.Vorname,
                 Geburtsdatum = entity.Geburtsdatum,
-                RowVersion = entity.RowVersion
+                Timestamp = entity.Timestamp
             };
         }
         public static List<Kunde> ConvertToEntities(this IEnumerable<KundeDto> dtos)
@@ -112,7 +112,7 @@ namespace AutoReservation.Service.Wcf
                 Bis = dto.Bis,
                 AutoId = dto.Auto.Id,
                 KundeId = dto.Kunde.Id,
-                RowVersion = dto.RowVersion
+                Timestamp = dto.Timestamp
             };
 
             return reservation;
@@ -126,7 +126,7 @@ namespace AutoReservation.Service.Wcf
                 ReservationsNr = entity.ReservationsNr,
                 Von = entity.Von,
                 Bis = entity.Bis,
-                RowVersion = entity.RowVersion,
+                Timestamp = entity.Timestamp,
                 Auto = ConvertToDto(entity.Auto),
                 Kunde = ConvertToDto(entity.Kunde)
             };
