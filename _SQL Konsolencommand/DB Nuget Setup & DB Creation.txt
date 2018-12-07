@@ -8,5 +8,4 @@ Install-Package Microsoft.EntityFrameworkCore.Design
 Install-Package Microsoft.EntityFrameworkCore.SqlServer
 
 
-Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=Autoreservation;Trusted_Connection=True;"
-Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=Autoreservation;Trusted_Connection=True;"Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model

@@ -1,0 +1,4 @@
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.csprojAssemblyReference.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.csproj.CoreCompileInputs.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.AssemblyInfoInputs.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.AssemblyInfo.cs

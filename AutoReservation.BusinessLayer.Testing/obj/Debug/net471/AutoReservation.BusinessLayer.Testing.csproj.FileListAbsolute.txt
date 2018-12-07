@@ -1,0 +1,5 @@
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.BusinessLayer.Testing\obj\Debug\net471\AutoReservation.BusinessLayer.Testing.csprojAssemblyReference.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.BusinessLayer.Testing\obj\Debug\net471\AutoReservation.BusinessLayer.Testing.dll.config
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.BusinessLayer.Testing\obj\Debug\net471\AutoReservation.BusinessLayer.Testing.csproj.CoreCompileInputs.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.BusinessLayer.Testing\obj\Debug\net471\AutoReservation.BusinessLayer.Testing.AssemblyInfoInputs.cache
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.BusinessLayer.Testing\obj\Debug\net471\AutoReservation.BusinessLayer.Testing.AssemblyInfo.cs
