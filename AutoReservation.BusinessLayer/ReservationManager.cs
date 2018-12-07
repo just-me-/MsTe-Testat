@@ -14,12 +14,12 @@ namespace AutoReservation.BusinessLayer
             {
                 //  return context.Reservations.ToList();
                 // Reservationen oder Reservations.....??
-                return usingContext(context => includeReservationReferences(context.Reservationen).ToList());
+                return UsingContext(context => includeReservationReferences(context.Reservations).ToList());
             }
         }
         public Reservation GetReservationById(int reservationsNr)
         {
-            return usingContext(includeReservationReferences(context.Reservationen)
+            return UsingContext(context => includeReservationReferences(context.Reservations)
                                  .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr)
                                );
         }

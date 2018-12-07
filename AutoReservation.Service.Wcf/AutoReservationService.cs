@@ -14,7 +14,7 @@ namespace AutoReservation.Service.Wcf
 
         public void DeleteAuto(AutoDto autoDto)
         {
-            AutoManager
+            
         }
 
         public void DeleteKunde(AutoDto autoDto)

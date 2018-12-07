@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using AutoReservation.Dal;
+using AutoReservation.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -118,7 +119,7 @@ namespace AutoReservation.TestEnvironment
                 context.SetAutoIncrementOnTable(reservationTableName, true);
 
                 // Insert test data
-                context.Reservationen.AddRange(Reservationen);
+                context.Reservations.AddRange(Reservationen);
                 context.SaveChanges();
             }
             finally

@@ -23,6 +23,11 @@ xcuserdata/
 *.props
 *.targets
 *project.assets.json
+*bin/*
+*obj/*
+/bin/
+bin/
+obj/
 
 ## Other
 *.moved-aside

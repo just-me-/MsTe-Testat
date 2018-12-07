@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoReservation.BusinessLayer
 {
@@ -33,7 +34,7 @@ namespace AutoReservation.BusinessLayer
 
         private static Kunde updateKunde(Kunde value, EntityState state)
         {
-            return updateEntityWithoutReferences(value, state);
+            return UpdateEntityWithoutReferences(value, state);
         }
 
 
