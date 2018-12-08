@@ -1,4 +1,5 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.DataTransferObjects.Faults;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -47,6 +48,7 @@ namespace AutoReservation.Common.Interfaces
         AutoDto GetReservationDtoById(int Id);
 
         [OperationContract]
+        [FaultContract(typeof(CRUDException))]
         void InsertReservation(AutoDto autoDto);
 
         [OperationContract]

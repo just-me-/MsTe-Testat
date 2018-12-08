@@ -1,4 +1,5 @@
-﻿using AutoReservation.Common.DataTransferObjects;
+﻿using AutoReservation.BusinessLayer;
+using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace AutoReservation.Service.Wcf
 
         public void DeleteAuto(AutoDto autoDto)
         {
-            
+            AutoManager.DeleteAuto(DtoConverter.ConvertToEntity(autoDto));
         }
 
         public void DeleteKunde(AutoDto autoDto)

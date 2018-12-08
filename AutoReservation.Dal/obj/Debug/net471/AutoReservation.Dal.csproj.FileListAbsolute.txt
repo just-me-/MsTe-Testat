@@ -97,3 +97,4 @@ C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solutio
 C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.csproj.CopyComplete
 C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.dll
 C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.pdb
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.csprojAssemblyReference.cache
