@@ -16,7 +16,7 @@ namespace AutoReservation.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            // clue app view model ... 2DO
+            // clue app view model ... 2DO  AppViewModel = ... 
 
             MainWindow = new MainWindow();
             MainWindow.DataContext = AppViewModel;
