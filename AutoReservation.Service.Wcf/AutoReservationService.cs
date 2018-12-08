@@ -1,9 +1,11 @@
 ﻿using AutoReservation.BusinessLayer;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.FaultExceptions;
 using AutoReservation.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.ServiceModel;
 
 namespace AutoReservation.Service.Wcf
 {
