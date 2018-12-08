@@ -29,32 +29,32 @@ namespace AutoReservation.Common.Interfaces
         List<KundeDto> GetAllKundenDtos();
 
         [OperationContract]
-        AutoDto GetKundeDtoById(int Id);
+        KundeDto GetKundeDtoById(int Id);
 
         [OperationContract]
-        void InsertKunde(AutoDto autoDto);
+        void InsertKunde(KundeDto kundeDto);
 
         [OperationContract]
-        void UpdateKunde(AutoDto autoDto);
+        void UpdateKunde(KundeDto kundeDto);
 
         [OperationContract]
-        void DeleteKunde(AutoDto autoDto);
+        void DeleteKunde(KundeDto kundeDto);
 
         // Reservation
         [OperationContract]
         List<ReservationDto> GetAllReservationDtos();
 
         [OperationContract]
-        AutoDto GetReservationDtoById(int Id);
+        ReservationDto GetReservationDtoById(int Id);
 
         [OperationContract]
         [FaultContract(typeof(CRUDException))]
-        void InsertReservation(AutoDto autoDto);
+        void InsertReservation(ReservationDto reservationDto);
 
         [OperationContract]
-        void UpdateReservation(AutoDto autoDto);
+        void UpdateReservation(ReservationDto reservationDto);
 
         [OperationContract]
-        void DeleteReservation(AutoDto autoDto);
+        void DeleteReservation(ReservationDto reservationDto);
     }
 }
