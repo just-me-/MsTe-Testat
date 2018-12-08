@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
@@ -52,6 +53,8 @@ namespace AutoReservation.BusinessLayer
             // ob ein Auto für den gewünschten Zeitraum zur Verfügung steht. Autos können nahtlos(Ende = Star
             // t), aber nicht überlappend gebucht werden.Falls ein Auto nicht verfügbar ist,
             // muss eine AutoUnavailableException ausgelöst werden(noch nicht implementiert).
+
+            //im oberen layer geamcht weil sonst cyclic dependency... Business Layer darf nicht auf den Fault, der in Common ist, referenzieren.
 
             return UsingContext(context =>
             {

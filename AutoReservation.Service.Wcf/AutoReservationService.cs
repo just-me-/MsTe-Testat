@@ -5,7 +5,10 @@ using AutoReservation.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Resources;
 using System.ServiceModel;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -31,6 +34,72 @@ namespace AutoReservation.Service.Wcf
                 throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
             }
         }
+
+
+
+        private static void checkForDateRangeException(ReservationDto reservationDto)
+        {
+            DateTime von = reservationDto.Von;
+            DateTime bis = reservationDto.Bis;
+            TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
+            DateTime _24hLater = von.Add(oneDay);
+
+            //von datum muss mindestens 24h vor bis datum sein
+            //es wird implizit gleichzeitig geprüft, dass (von < bis)
+            if (_24hLater < bis)
+            {
+                InvalidDateRangeFault fault = new InvalidDateRangeFault();
+                if (bis < von)
+                {
+                    fault.Message = "Zeitreisen oder was?";
+                }
+                else
+                {
+                    fault.Message = "Sie müssen mindestens 24h reservieren";
+                }
+
+                fault.Bis = bis;
+                fault.Von = von;
+                throw new FaultException<InvalidDateRangeFault>(fault);
+            }
+
+        }
+
+        private void checkForAvailabilityException(ReservationDto reservationDto)
+        {
+
+            DateTime start = reservationDto.Von;
+            DateTime end = reservationDto.Bis;
+            AutoDto myAuto = reservationDto.Auto;
+
+            List<ReservationDto> reservations = GetAllReservationDtos();
+
+            var reservedDates =
+                from r in reservations
+                where r.Auto == myAuto
+                select new
+                {
+                    r.Von,
+                    r.Bis
+                };
+
+            foreach (var reservedDate in reservedDates)
+            {
+                //ich reserviere, nachdem es jeman anders reserviert hat &&
+                //der andere hat es noch nicht wieder zurückgegeben
+                if (reservedDate.Von < start && end < reservedDate.Bis)
+                {
+                    AutoUnavailableFault fault = new AutoUnavailableFault();
+                    fault.Message = "Das Auto ist schon reserviert";
+                    fault.Bis = end;
+                    fault.Von = start;
+                    throw new FaultException<AutoUnavailableFault>(fault);
+                }
+
+            }
+        }
+
+
 
         public void DeleteAuto(AutoDto autoDto)
         {
@@ -101,6 +170,11 @@ namespace AutoReservation.Service.Wcf
         public void InsertReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
+
+        
+            checkForDateRangeException(reservationDto);
+            checkForAvailabilityException(reservationDto);
+
             ReservationManager.InsertReservation(reservationDto.ConvertToEntity());
         }
 
@@ -121,6 +195,10 @@ namespace AutoReservation.Service.Wcf
         public void UpdateReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
+
+            checkForDateRangeException(reservationDto);
+            checkForAvailabilityException(reservationDto);
+
             handlingOptimisticConcurrencyException<ReservationDto>("UpdateReservation",
                 () => ReservationManager.UpdateReservation(reservationDto.ConvertToEntity()));
         }

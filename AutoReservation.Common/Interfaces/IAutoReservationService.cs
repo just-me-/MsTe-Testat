@@ -48,10 +48,13 @@ namespace AutoReservation.Common.Interfaces
         ReservationDto GetReservationDtoById(int Id);
 
         [OperationContract]
-        [FaultContract(typeof(CRUDException))]
+        [FaultContract(typeof(AutoUnavailableFault))]
+        [FaultContract(typeof(InvalidDateRangeFault))]
         void InsertReservation(ReservationDto reservationDto);
 
         [OperationContract]
+        [FaultContract(typeof(AutoUnavailableFault))]
+        [FaultContract(typeof(InvalidDateRangeFault))]
         void UpdateReservation(ReservationDto reservationDto);
 
         [OperationContract]

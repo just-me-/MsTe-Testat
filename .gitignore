@@ -30,6 +30,15 @@ bin/
 obj/
 *obj\*
 *bin\*
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
+
+*.dll
+*.pdb
 
 ## Other
 *.moved-aside
