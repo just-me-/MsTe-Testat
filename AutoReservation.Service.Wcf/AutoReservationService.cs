@@ -13,79 +13,114 @@ namespace AutoReservation.Service.Wcf
         private static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
 
+        private static void handlingOptimisticConcurrencyException<TEntity>(string operation, Action func)
+        {
+            try
+            {
+                func();
+            }
+            catch (LocalOptimisticConcurrencyException<TEntity> e)
+            {
+                var fault = new OptimisticConcurrencyFaultContract()
+                {
+                    Operation = operation,
+                    Message = e.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+            }
+        }
+
         public void DeleteAuto(AutoDto autoDto)
         {
+            WriteActualMethod();
             AutoManager.DeleteAuto(DtoConverter.ConvertToEntity(autoDto));
         }
 
-        public void DeleteKunde(AutoDto autoDto)
+        public void DeleteKunde(KundeDto kundeDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            KundeManager.DeleteKunde(DtoConverter.ConvertToEntity(kundeDto));
         }
 
-        public void DeleteReservation(AutoDto autoDto)
+        public void DeleteReservation(ReservationDto reservationDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            ReservationManager.DeleteReservation(DtoConverter.ConvertToEntity(reservationDto));
         }
 
         public List<AutoDto> GetAllAutoDtos()
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            return AutoManager.GetAllAutos().ConvertToDtos(); 
         }
 
         public List<KundeDto> GetAllKundenDtos()
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            return KundeManager.List.ConvertToDtos();
         }
 
         public List<ReservationDto> GetAllReservationDtos()
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            return ReservationManager.List.ConvertToDtos();
         }
 
         public AutoDto GetAutoDtoById(int Id)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            return AutoManager.GetAutoById(Id).ConvertToDto();
         }
 
-        public AutoDto GetKundeDtoById(int Id)
+        public KundeDto GetKundeDtoById(int Id)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            return KundeManager.GetKundeById(Id).ConvertToDto();
         }
 
-        public AutoDto GetReservationDtoById(int Id)
+        public ReservationDto GetReservationDtoById(int Id)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+           return ReservationManager.GetReservationById(Id).ConvertToDto();
         }
 
         public void InsertAuto(AutoDto autoDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            AutoManager.InsertAuto(autoDto.ConvertToEntity());
         }
 
-        public void InsertKunde(AutoDto autoDto)
+        public void InsertKunde(KundeDto kundeDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            KundeManager.InsertKunde(kundeDto.ConvertToEntity());
         }
 
-        public void InsertReservation(AutoDto autoDto)
+        public void InsertReservation(ReservationDto reservationDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            ReservationManager.InsertReservation(reservationDto.ConvertToEntity());
         }
 
         public void UpdateAuto(AutoDto autoDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            handlingOptimisticConcurrencyException<AutoDto>("UpdateAuto",
+                () => AutoManager.UpdateAuto(autoDto.ConvertToEntity()));
         }
 
-        public void UpdateKunde(AutoDto autoDto)
+        public void UpdateKunde(KundeDto kundeDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            handlingOptimisticConcurrencyException<KundeDto>("UpdateKunde",
+                () => KundeManager.UpdateKunde(kundeDto.ConvertToEntity()));
         }
 
-        public void UpdateReservation(AutoDto autoDto)
+        public void UpdateReservation(ReservationDto reservationDto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            handlingOptimisticConcurrencyException<ReservationDto>("UpdateReservation",
+                () => ReservationManager.UpdateReservation(reservationDto.ConvertToEntity()));
         }
     }
 }
