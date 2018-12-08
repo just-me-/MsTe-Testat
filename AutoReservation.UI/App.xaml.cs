@@ -13,5 +13,14 @@ namespace AutoReservation.UI
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            // clue app view model ... 2DO
+
+            MainWindow = new MainWindow();
+            MainWindow.DataContext = AppViewModel;
+            MainWindow.Show();
+        }
     }
 }
