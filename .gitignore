@@ -28,6 +28,8 @@ xcuserdata/
 /bin/
 bin/
 obj/
+*obj\*
+*bin\*
 
 ## Other
 *.moved-aside
