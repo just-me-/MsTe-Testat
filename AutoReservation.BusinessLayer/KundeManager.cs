@@ -8,26 +8,26 @@ namespace AutoReservation.BusinessLayer
 {
     public class KundeManager : ManagerBase
     {
-        public List<Kunde> List
+        public static List<Kunde> List
         {
             get
             {
                 return UsingContext(context => context.Kunden.ToList());
             }
         }
-        public Kunde GetKundeById(int id)
+        public static Kunde GetKundeById(int id)
         {
             return UsingContext(context => context.Kunden.FirstOrDefault(kunde => kunde.Id == id));
         }
-        public Kunde InsertKunde(Kunde kunde)
+        public static Kunde InsertKunde(Kunde kunde)
         {
             return updateKunde(kunde, EntityState.Added);
         }
-        public Kunde UpdateKunde(Kunde kunde)
+        public static Kunde UpdateKunde(Kunde kunde)
         {
             return updateKunde(kunde, EntityState.Modified);
         }
-        public void DeleteKunde(Kunde kunde)
+        public static void DeleteKunde(Kunde kunde)
         {
             updateKunde(kunde, EntityState.Deleted);
         }

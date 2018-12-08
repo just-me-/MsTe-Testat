@@ -8,7 +8,7 @@ namespace AutoReservation.BusinessLayer
 {
     public class ReservationManager : ManagerBase
     {
-        public List<Reservation> List
+        public static List<Reservation> List
         {
             get
             {
@@ -17,21 +17,21 @@ namespace AutoReservation.BusinessLayer
                 return UsingContext(context => includeReservationReferences(context.Reservations).ToList());
             }
         }
-        public Reservation GetReservationById(int reservationsNr)
+        public static Reservation GetReservationById(int reservationsNr)
         {
             return UsingContext(context => includeReservationReferences(context.Reservations)
                                  .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr)
                                );
         }
-        public Reservation InsertReservation(Reservation reservation)
+        public static Reservation InsertReservation(Reservation reservation)
         {
             return updateReservation(reservation, EntityState.Added);
         }
-        public Reservation UpdateReservation(Reservation reservation)
+        public static Reservation UpdateReservation(Reservation reservation)
         {
             return updateReservation(reservation, EntityState.Modified);
         }
-        public void DeleteReservation(Reservation reservation)
+        public static void DeleteReservation(Reservation reservation)
         {
             updateReservation(reservation, EntityState.Deleted);
         }
