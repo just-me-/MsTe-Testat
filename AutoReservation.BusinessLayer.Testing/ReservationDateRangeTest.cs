@@ -33,10 +33,24 @@ namespace AutoReservation.BusinessLayer.Testing
     
 
             
-            Assert.Throws<FaultException<InvalidDateRangeFault>>( 
+            var ex = Assert.Throws<FaultException<InvalidDateRangeFault>>( 
                  () => ReservationManager.UpdateReservation(res)
                 );
 
+            Assert.Equal(ReservationManager.min24hMessage, ex.Detail.Message);
+
+        }
+
+        [Fact]
+        public void TestVonAfterBis()
+        {
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today.AddDays(1);
+            res.Bis = DateTime.Today;
+            var ex = Assert.Throws<FaultException<InvalidDateRangeFault>>(
+             () => ReservationManager.UpdateReservation(res)
+             );
+            Assert.Equal(ReservationManager.vonNachBisMessage, ex.Detail.Message);
         }
 
 

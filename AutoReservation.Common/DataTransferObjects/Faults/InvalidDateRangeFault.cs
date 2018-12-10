@@ -12,7 +12,7 @@ namespace AutoReservation.Common.DataTransferObjects.Faults
     {
         public InvalidDateRangeFault()
         {
-            Message = "Reservation muss min 24h dauern und  Von-Datum muss vor bis-Datum liegen";
+            Message = "Reservation muss min 24h dauern und Von-Datum muss vor bis-Datum liegen";
         }
 
         [DataMember]

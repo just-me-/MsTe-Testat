@@ -12,6 +12,11 @@ namespace AutoReservation.BusinessLayer
 {
     public class ReservationManager : ManagerBase
     {
+
+        public static readonly string vonNachBisMessage = "Zeitreisen oder was?";
+        public static readonly string min24hMessage = "Sie müssen mindestens 24h reservieren";
+        public static readonly string alreadyReserved = "Der Karren ist schon reserviert";
+
         public static List<Reservation> List
         {
             get
@@ -84,11 +89,11 @@ namespace AutoReservation.BusinessLayer
                 InvalidDateRangeFault fault = new InvalidDateRangeFault();
                 if (bis < von)
                 {
-                    fault.Message = "Zeitreisen oder was?";
+                    fault.Message = vonNachBisMessage;
                 }
                 else
                 {
-                    fault.Message = "Sie müssen mindestens 24h reservieren";
+                    fault.Message = min24hMessage;
                 }
 
                 fault.Bis = bis;
@@ -123,7 +128,7 @@ namespace AutoReservation.BusinessLayer
                 if ( Overlap(reservedDate.Von, reservedDate.Bis, wantedStart, wantedEnd) )
                 {
                     AutoUnavailableFault fault = new AutoUnavailableFault();
-                    fault.Message = "Das Auto ist schon reserviert";
+                    fault.Message = alreadyReserved;
                     fault.Bis = wantedEnd;
                     fault.Von = wantedStart;
                     throw new FaultException<AutoUnavailableFault>(fault);
