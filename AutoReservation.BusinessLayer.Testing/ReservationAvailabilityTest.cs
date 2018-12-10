@@ -2,6 +2,8 @@
 using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
 using Xunit;
+using System.ServiceModel;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.BusinessLayer.Testing
 {
@@ -11,67 +13,131 @@ namespace AutoReservation.BusinessLayer.Testing
         private ReservationManager target;
         private ReservationManager Target => target ?? (target = new ReservationManager());
 
-        public ReservationAvailabilityTest()
+
+
+
+
+        [Fact]
+        public void TestOverlap1()
         {
-            // Prepare reservation
-            Reservation reservation = ReservationManager.GetReservationById(1);
-            reservation.Von = DateTime.Today;
-            reservation.Bis = DateTime.Today.AddDays(1);
-            ReservationManager.UpdateReservation(reservation);
+            //    ------------1-------------
+            //        --------------2-------------
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today;
+            res.Bis = DateTime.Today.AddDays(1);
+            int targetCarId = res.AutoId;
+            ReservationManager.UpdateReservation(res);
+
+            Reservation res2 = ReservationManager.GetReservationById(2);
+            res2.Von = DateTime.Today.AddHours(1);
+            res2.Bis = DateTime.Today.AddDays(2);
+            res2.AutoId = targetCarId;
+
+            Assert.Throws<FaultException<AutoUnavailableFault>>(
+             () => ReservationManager.UpdateReservation(res2)
+            );
         }
 
         [Fact]
-        public void ScenarioOkay01Test()
+        public void TestOverlap2()
         {
-            throw new NotImplementedException("Test not implemented.");
+            //             ------------1-------------
+            //        --------------2-------------
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today.AddHours(1);
+            res.Bis = DateTime.Today.AddDays(2);
+            int targetCarId = res.AutoId;
+            ReservationManager.UpdateReservation(res);
+
+            Reservation res2 = ReservationManager.GetReservationById(2);
+            res2.Von = DateTime.Today;
+            res2.Bis = DateTime.Today.AddDays(1);
+            res2.AutoId = targetCarId;
+
+            Assert.Throws<FaultException<AutoUnavailableFault>>(
+             () => ReservationManager.UpdateReservation(res2)
+            );
         }
 
         [Fact]
-        public void ScenarioOkay02Test()
+        public void TestOverlap3()
         {
-            throw new NotImplementedException("Test not implemented.");
+            //    ------------------1------------------
+            //        --------------2-------------
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today;
+            res.Bis = DateTime.Today.AddDays(5);
+            int targetCarId = res.AutoId;
+            ReservationManager.UpdateReservation(res);
+
+            Reservation res2 = ReservationManager.GetReservationById(2);
+            res2.Von = DateTime.Today.AddDays(1);
+            res2.Bis = DateTime.Today.AddDays(2);
+            res2.AutoId = targetCarId;
+
+            Assert.Throws<FaultException<AutoUnavailableFault>>(
+             () => ReservationManager.UpdateReservation(res2)
+            );
+        }
+
+
+
+        [Fact]
+        public void TestOverlap4()
+        {
+            //          ------------1-------------
+            //      ----------------2-----------------
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today.AddDays(1);
+            res.Bis = DateTime.Today.AddDays(2);
+            int targetCarId = res.AutoId;
+            ReservationManager.UpdateReservation(res);
+
+            Reservation res2 = ReservationManager.GetReservationById(2);
+            res2.Von = DateTime.Today;
+            res2.Bis = DateTime.Today.AddDays(5);
+            res2.AutoId = targetCarId;
+
+            Assert.Throws<FaultException<AutoUnavailableFault>>(
+             () => ReservationManager.UpdateReservation(res2)
+            );
+        }
+
+
+        [Fact]
+        public void TestOK1()
+        {
+            //          ------------1-------------
+            //                                    ------------2-------------
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today.AddDays(1);
+            res.Bis = DateTime.Today.AddDays(2);
+            ReservationManager.UpdateReservation(res);
+
+            Reservation res2 = ReservationManager.GetReservationById(2);
+            res2.Von = DateTime.Today.AddDays(2);
+            res2.Bis = DateTime.Today.AddDays(3);
+
+            ReservationManager.UpdateReservation(res2);
         }
 
         [Fact]
-        public void ScenarioOkay03Test()
+        public void TestOK2()
         {
-            throw new NotImplementedException("Test not implemented.");
+            //                                   ------------1-------------
+            //         ------------2-------------
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today.AddDays(2);
+            res.Bis = DateTime.Today.AddDays(3);
+            ReservationManager.UpdateReservation(res);
+
+            Reservation res2 = ReservationManager.GetReservationById(2);
+            res2.Von = DateTime.Today.AddDays(1);
+            res2.Bis = DateTime.Today.AddDays(2);
+
+            ReservationManager.UpdateReservation(res2);
         }
 
-        [Fact]
-        public void ScenarioOkay04Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
 
-        [Fact]
-        public void ScenarioNotOkay01Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioNotOkay02Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioNotOkay03Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioNotOkay04Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioNotOkay05Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
     }
 }

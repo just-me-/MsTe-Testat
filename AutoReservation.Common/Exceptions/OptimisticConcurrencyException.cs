@@ -1,10 +1,9 @@
 ﻿using System.Runtime.Serialization;
-using AutoReservation.BusinessLayer;
 
 namespace AutoReservation.Common.Exceptions
 {
     [DataContract]
-    public class OptimisticConcurrencyException<T> where T : ManagerBase
+    public class OptimisticConcurrencyException<T>
     {
         [DataMember]
         public T Entity { get; set; }

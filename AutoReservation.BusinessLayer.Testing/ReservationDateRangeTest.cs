@@ -1,6 +1,9 @@
 ﻿using System;
+using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
 using Xunit;
+using AutoReservation.Common.DataTransferObjects.Faults;
+using System.ServiceModel;
 
 namespace AutoReservation.BusinessLayer.Testing
 {
@@ -10,34 +13,32 @@ namespace AutoReservation.BusinessLayer.Testing
         private ReservationManager target;
         private ReservationManager Target => target ?? (target = new ReservationManager());
 
-        [Fact]
-        public void ScenarioOkay01Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
 
         [Fact]
-        public void ScenarioOkay02Test()
+        public void TestExactly24hReservation()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today;
+            res.Bis = DateTime.Today.AddDays(1);
+            ReservationManager.UpdateReservation(res);
         }
 
-        [Fact]
-        public void ScenarioNotOkay01Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
 
         [Fact]
-        public void ScenarioNotOkay02Test()
+        public void TestNot24h()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today;
+            res.Bis = DateTime.Today.AddHours(12);
+    
+
+            
+            Assert.Throws<FaultException<InvalidDateRangeFault>>( 
+                 () => ReservationManager.UpdateReservation(res)
+                );
+
         }
 
-        [Fact]
-        public void ScenarioNotOkay03Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
+
     }
 }

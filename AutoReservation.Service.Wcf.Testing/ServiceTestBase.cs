@@ -174,37 +174,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void InsertReservationWithInvalidDateRangeTest()
         {
-            Auto auto = new StandardAuto();
-            Kunde kunde = new Kunde();
-
-            //weniger als 24h
-            Reservation r = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 6, 12, 0, 0),
-                Bis = new DateTime(2000, 6, 6, 12, 0, 1)
-            };
-
-
-            Target.InsertReservation(r.ConvertToDto());
-
-            Assert.Throws<FaultException<InvalidDateRangeFault>>(
-                    () => Target.InsertReservation(r.ConvertToDto())
-                );
-
-            //bis < von
-            Reservation r2 = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 6, 12, 0, 0),
-                Bis = new DateTime(1999, 6, 6, 12, 0, 1)
-            };
-
-            Assert.Throws<FaultException<InvalidDateRangeFault>>(
-                () => Target.InsertReservation(r.ConvertToDto())
-            );
+            
 
         }
 
@@ -212,31 +182,7 @@ namespace AutoReservation.Service.Wcf.Testing
         public void InsertReservationWithAutoNotAvailableTest()
         {
 
-            Auto auto = new StandardAuto();
-            Kunde kunde = new Kunde();
-
-            Reservation r = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 6, 12, 0, 0),
-                Bis = new DateTime(2000, 6, 7, 12, 0, 1)
-            };
-
-            Reservation r2 = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 7, 0, 0, 0),  //auto bis 7. um 12 reserviert, der will nun um 0 uhr reservieren
-                Bis = new DateTime(2000, 6, 9, 12, 0, 1)
-            };
-
-            Target.InsertReservation(r.ConvertToDto());
-
-            Assert.Throws<FaultException<AutoUnavailableFault>>(
-                () => Target.InsertReservation(r2.ConvertToDto())
-            );
-
+            
 
         }
 
@@ -244,57 +190,13 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateReservationWithInvalidDateRangeTest()
         {
-            Auto auto = new StandardAuto();
-            Kunde kunde = new Kunde();
-            Reservation r = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 6, 12, 0, 0),
-                Bis = new DateTime(2000, 6, 7, 12, 0, 1)
-            };
 
-            Target.InsertReservation(r.ConvertToDto());
-
-            r.Bis = new DateTime(2000, 6, 6, 12, 0, 1);
-           
-
-            Assert.Throws<FaultException<InvalidDateRangeFault>>(
-                () => Target.UpdateReservation(r.ConvertToDto())
-            );
         }
 
         [Fact]
         public void UpdateReservationWithAutoNotAvailableTest()
         {
-            Auto auto = new StandardAuto();
-            Kunde kunde = new Kunde();
-
-            Reservation r = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 6, 12, 0, 0),
-                Bis = new DateTime(2000, 6, 7, 12, 0, 1)
-            };
-
-            Reservation r2 = new Reservation
-            {
-                Auto = auto,
-                Kunde = kunde,
-                Von = new DateTime(2000, 6, 8, 0, 0, 0), 
-                Bis = new DateTime(2000, 6, 9, 12, 0, 1)
-            };
-
-            Target.InsertReservation(r.ConvertToDto());
-            Target.InsertReservation(r2.ConvertToDto());
-
-
-            r2.Von = new DateTime(2000, 6, 7, 0, 0, 1);
-
-            Assert.Throws<FaultException<AutoUnavailableFault>>(
-                () => Target.UpdateReservation(r2.ConvertToDto())
-            );
+            
         }
 
         #endregion

@@ -4,6 +4,10 @@
     <TargetFramework>net471</TargetFramework>
   </PropertyGroup>
    <ItemGroup>
+     <ProjectReference Include="..\AutoReservation.Common\AutoReservation.Common.csproj" />
      <ProjectReference Include="..\AutoReservation.Dal\AutoReservation.Dal.csproj" />
+   </ItemGroup>
+   <ItemGroup>
+     <Reference Include="System.ServiceModel" />
    </ItemGroup>
 </Project>

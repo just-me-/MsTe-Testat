@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
@@ -13,7 +14,12 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void UpdateKundeTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Kunde someDude = KundeManager.GetKundeById(1);
+            someDude.Nachname = "DUDE!";
+            KundeManager.UpdateKunde(someDude);
+
+            someDude = KundeManager.GetKundeById(1);
+            Assert.Equal("DUDE!", someDude.Nachname);
         }
     }
 }

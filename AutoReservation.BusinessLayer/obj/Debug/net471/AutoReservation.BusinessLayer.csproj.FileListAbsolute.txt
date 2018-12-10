@@ -258,3 +258,7 @@ D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLay
 D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.csproj.CopyComplete
 D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.dll
 D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.pdb
+D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\bin\Debug\net471\Microsoft.EntityFrameworkCore.Design.dll
+D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\bin\Debug\net471\AutoReservation.Common.dll
+D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\bin\Debug\net471\AutoReservation.Common.pdb
+D:\Eigene Dokumente\Visual Studio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\bin\Debug\net471\AutoReservation.Common.dll.config
