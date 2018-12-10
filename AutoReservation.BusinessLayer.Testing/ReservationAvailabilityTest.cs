@@ -14,10 +14,10 @@ namespace AutoReservation.BusinessLayer.Testing
         public ReservationAvailabilityTest()
         {
             // Prepare reservation
-            Reservation reservation = Target.GetReservationById(1);
+            Reservation reservation = ReservationManager.GetReservationById(1);
             reservation.Von = DateTime.Today;
             reservation.Bis = DateTime.Today.AddDays(1);
-            Target.UpdateReservation(reservation);
+            ReservationManager.UpdateReservation(reservation);
         }
 
         [Fact]
