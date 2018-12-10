@@ -25,5 +25,24 @@ namespace AutoReservation.BusinessLayer.Testing
             Assert.Equal(20, myCar.Tagestarif);
             Assert.Equal(20, sameCar.Tagestarif);
         }
+
+
+        public void InsertAndDeleteAutoTest()
+        {
+            Auto someCar = new LuxusklasseAuto
+            {
+                Marke = "DUDE!",
+                Tagestarif = 10,
+                Basistarif = 20
+            };
+
+            Auto neu = AutoManager.InsertAuto(someCar);
+
+            Auto sameCar = AutoManager.GetAutoById(neu.Id);
+            Assert.Equal("DUDE!", someCar.Marke);
+            Assert.Equal("DUDE!", sameCar.Marke);
+
+            AutoManager.DeleteAuto(neu);
+        }
     }
 }

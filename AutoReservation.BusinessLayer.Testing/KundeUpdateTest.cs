@@ -21,5 +21,24 @@ namespace AutoReservation.BusinessLayer.Testing
             someDude = KundeManager.GetKundeById(1);
             Assert.Equal("DUDE!", someDude.Nachname);
         }
+
+        [Fact]
+        public void InsertAndDeleteKundeTest()
+        {
+            Kunde someDude = new Kunde
+            {
+                Nachname = "DUDE!",
+                Vorname = "Bla",
+                Geburtsdatum = DateTime.Today
+            };
+
+            Kunde neu = KundeManager.InsertKunde(someDude);
+
+            Kunde sameDude = KundeManager.GetKundeById(neu.Id);
+            Assert.Equal("DUDE!", someDude.Nachname);
+            Assert.Equal("DUDE!", sameDude.Nachname);
+
+            KundeManager.DeleteKunde(neu);
+        }
     }
 }
