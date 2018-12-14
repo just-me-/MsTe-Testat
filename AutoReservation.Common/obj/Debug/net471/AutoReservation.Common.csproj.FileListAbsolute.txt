@@ -136,7 +136,6 @@ C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\System.Security.SecureString.dll
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\System.Threading.Overlapped.dll
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\System.Xml.XPath.XDocument.dll
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csprojAssemblyReference.cache
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.dll.config
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csproj.CoreCompileInputs.cache
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.AssemblyInfoInputs.cache
@@ -144,14 +143,6 @@ C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csproj.CopyComplete
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.dll
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.pdb
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\Microsoft.Extensions.Logging.Configuration.dll
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\Microsoft.Extensions.Logging.Console.dll
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\Microsoft.Extensions.Options.ConfigurationExtensions.dll
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\AutoReservation.BusinessLayer.dll
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\AutoReservation.Dal.dll
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\AutoReservation.BusinessLayer.pdb
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\AutoReservation.BusinessLayer.dll.config
-C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Common\bin\Debug\net471\AutoReservation.Dal.pdb
 E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csprojAssemblyReference.cache
 E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.dll.config
 E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csproj.CoreCompileInputs.cache
