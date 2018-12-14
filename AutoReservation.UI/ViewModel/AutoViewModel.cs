@@ -13,39 +13,23 @@ using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.UI
 {
-    public class KundeViewModel
+    public class AutoViewModel
     {
-        ObservableCollection<KundeDto> Kunden { get; set; }
+        ObservableCollection<KundeDto> Autos { get; set; }
 
-        public KundeViewModel()
+        public AutoViewModel()
         {
             connectToServer();
         }
 
         private void connectToServer()
         {
-
-
-
-            //Channel erstellen
             var channelFactory = new ChannelFactory<IAutoReservationService>("AutoReservationService");
             var service = channelFactory.CreateChannel();
 
-
-            //Testen und ConosleLog:
             Console.WriteLine("Service started");
-            List<KundeDto> allCustomers = service.GetAllKundenDtos();
-
-            Kunden = new ObservableCollection<KundeDto>(allCustomers);
-
-            //allCustomers.ForEach((dto) =>
-            //{
-            //    Console.WriteLine("ID: " + dto.Id + ", Nachname: " + dto.Nachname);
-            //}
-            
-            //);
-
-
+            List<AutoDto> allAutos = service.GetAllAutoDtos();
+            Autos = new ObservableCollection<KundeDto>(allAutos);
         }
 
     }
