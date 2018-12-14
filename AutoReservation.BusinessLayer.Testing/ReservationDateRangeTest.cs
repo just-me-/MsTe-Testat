@@ -23,6 +23,15 @@ namespace AutoReservation.BusinessLayer.Testing
             ReservationManager.UpdateReservation(res);
         }
 
+        [Fact]
+        public void TestExactlylongReservation()
+        {
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = DateTime.Today;
+            res.Bis = DateTime.Today.AddDays(100);
+            ReservationManager.UpdateReservation(res);
+        }
+
 
         [Fact]
         public void TestNot24h()
@@ -47,6 +56,18 @@ namespace AutoReservation.BusinessLayer.Testing
             Reservation res = ReservationManager.GetReservationById(1);
             res.Von = DateTime.Today.AddDays(1);
             res.Bis = DateTime.Today;
+            var ex = Assert.Throws<FaultException<InvalidDateRangeFault>>(
+             () => ReservationManager.UpdateReservation(res)
+             );
+            Assert.Equal(ReservationManager.vonNachBisMessage, ex.Detail.Message);
+        }
+
+        [Fact]
+        public void TestWrongYear()
+        {
+            Reservation res = ReservationManager.GetReservationById(1);
+            res.Von = new DateTime(2030, 1, 1);
+            res.Bis = new DateTime(1999, 1, 1);
             var ex = Assert.Throws<FaultException<InvalidDateRangeFault>>(
              () => ReservationManager.UpdateReservation(res)
              );
