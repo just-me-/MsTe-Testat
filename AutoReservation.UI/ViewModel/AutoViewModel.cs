@@ -15,7 +15,7 @@ namespace AutoReservation.UI
 {
     public class AutoViewModel
     {
-        ObservableCollection<KundeDto> Autos { get; set; }
+        ObservableCollection<AutoDto> Autos { get; set; }
 
         public AutoViewModel()
         {
@@ -29,7 +29,7 @@ namespace AutoReservation.UI
 
             Console.WriteLine("Service started");
             List<AutoDto> allAutos = service.GetAllAutoDtos();
-            Autos = new ObservableCollection<KundeDto>(allAutos);
+            Autos = new ObservableCollection<AutoDto>(allAutos);
         }
 
     }

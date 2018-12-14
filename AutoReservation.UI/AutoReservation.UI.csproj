@@ -57,7 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\AutoViewModel.cs" />
     <Compile Include="ViewModel\KundeViewModel.cs" />
+    <Compile Include="ViewModel\ReservationViewModel.cs" />
     <Compile Include="Views\AutoView.xaml.cs">
       <DependentUpon>AutoView.xaml</DependentUpon>
     </Compile>

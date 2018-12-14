@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
                    FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
-                Auto-Liste
+                Autos
             </Label>
             <DataGrid Grid.Row="1"
                       Name="dgAutos" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
@@ -41,16 +41,16 @@
             </DataGrid>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button HorizontalAlignment="Left" Command="{Binding LoadCommand}">
+            <Button HorizontalAlignment="Left" Command="{Binding RefreshAutos}">
                 <Image Source="/Images/refresh_48_48.png" />
             </Button>
-            <Button HorizontalAlignment="Left" Command="{Binding NewCommand}" Margin="5,0,0,0">
+            <Button HorizontalAlignment="Left" Command="{Binding NewAutos}" Margin="5,0,0,0">
                 <Image Source="/Images/add_48_48.png" />
             </Button>
-            <Button HorizontalAlignment="Left" Command="{Binding DeleteCommand}" Margin="5,0,0,0" Style="{DynamicResource ValidatedButtonStyle}">
+            <Button HorizontalAlignment="Left" Command="{Binding DeleteAutos}" Margin="5,0,0,0">
                 <Image Source="/Images/delete_48_48.png" />
             </Button>
-            <Button HorizontalAlignment="Left" Command="{Binding SaveCommand}" Margin="5,0,0,0" Style="{DynamicResource ValidatedButtonStyle}">
+            <Button HorizontalAlignment="Left" Command="{Binding SaveAutos}" Margin="5,0,0,0">
                 <Image Source="/Images/save_48_48.png"  />
             </Button>
             <ScrollViewer Margin="5,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -58,7 +58,7 @@
             </ScrollViewer>
         </StackPanel>
         <!-- Details -->
-        <Grid Grid.Column="3" Visibility="{Binding SelectedAuto, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
+        <Grid Grid.Column="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="150" />
@@ -79,14 +79,12 @@
 
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
                    FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
-                Auto Editieren
+                Auto bearbeiten / erfassen?
             </Label>
-            <ComboBox Grid.Column="1" Grid.Row="1" 
-                      ItemsSource="{Binding Source={StaticResource AutoKlassen}}"
-                      SelectedIndex="{Binding SelectedAuto.AutoKlasse, Converter={StaticResource AutoKlasseEnumConverter}}"  />
+            <ComboBox Grid.Column="1" Grid.Row="1" />
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedAuto.Marke}" />
             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedAuto.Tagestarif}" />
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedAuto.Basistarif}" Visibility="{Binding SelectedAuto.AutoKlasse, Converter={StaticResource BasistarifVisibilityConverter}, Mode=TwoWay}" />
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedAuto.Basistarif}" />
         </Grid>
     </Grid>
 </Window>

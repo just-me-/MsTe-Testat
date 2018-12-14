@@ -22,7 +22,12 @@ namespace AutoReservation.UI
     {
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
+        }
+        public MainWindow(object viewModel)
+        {
+            DataContext = viewModel;
+            //InitializeComponent();
         }
     }
 }

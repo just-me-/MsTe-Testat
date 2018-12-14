@@ -16,10 +16,18 @@ namespace AutoReservation.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            // clue app view model ... 2DO  AppViewModel = ... 
 
+            // 1st version; einfach 3 Fenster öffnen :P
             MainWindow = new MainWindow();
             MainWindow.DataContext = new KundeViewModel();
+            MainWindow.Show();
+
+            MainWindow = new MainWindow();
+            MainWindow.DataContext = new AutoViewModel();
+            MainWindow.Show();
+
+            MainWindow = new MainWindow();
+            MainWindow.DataContext = new ReservationViewModel();
             MainWindow.Show();
         }
     }
