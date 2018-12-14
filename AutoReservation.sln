@@ -22,6 +22,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{8C52366D-F400-4ADF-B894-082CA580BECA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoReservation.UI", "AutoReservation.UI\AutoReservation.UI.csproj", "{60956003-8085-408D-9ED4-A29A6A5EFDCA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{22972439-3FFF-41D2-B5AE-6C06ABC66EB4} = {22972439-3FFF-41D2-B5AE-6C06ABC66EB4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

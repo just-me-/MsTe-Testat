@@ -19,7 +19,7 @@ namespace AutoReservation.UI
             // clue app view model ... 2DO  AppViewModel = ... 
 
             MainWindow = new MainWindow();
-            MainWindow.DataContext = AppViewModel;
+            MainWindow.DataContext = new KundeViewModel();
             MainWindow.Show();
         }
     }
