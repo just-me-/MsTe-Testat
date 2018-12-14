@@ -1,8 +1,11 @@
-﻿using System;
+﻿using AutoReservation.Common.Interfaces;
+using AutoReservation.UI;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -13,21 +16,16 @@ namespace AutoReservation.UI
     /// </summary>
     public partial class App : Application
     {
+        public MainViewModel MvModel { get; set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // 1st version; einfach 3 Fenster öffnen :P
-            MainWindow = new MainWindow();
-            MainWindow.DataContext = new KundeViewModel();
-            MainWindow.Show();
+            MvModel = new MainViewModel();
 
             MainWindow = new MainWindow();
-            MainWindow.DataContext = new AutoViewModel();
-            MainWindow.Show();
-
-            MainWindow = new MainWindow();
-            MainWindow.DataContext = new ReservationViewModel();
+            MainWindow.DataContext = MvModel;
             MainWindow.Show();
         }
     }

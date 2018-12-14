@@ -31,7 +31,6 @@ namespace AutoReservation.UI
             List<ReservationDto> allReservations = service.GetAllReservationDtos();
 
             Reservation = new ObservableCollection<ReservationDto>(allReservations);
-
         }
 
     }
