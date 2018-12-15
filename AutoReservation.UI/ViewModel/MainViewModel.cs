@@ -13,9 +13,9 @@ namespace AutoReservation.UI
 
     public class MainViewModel
     {
-        ObservableCollection<KundeDto> Kunden { get; set; }
-        ObservableCollection<AutoDto> Autos { get; set; }
-        ObservableCollection<ReservationDto> Reservation { get; set; }
+        public ObservableCollection<KundeDto> Kunden { get; set; }
+        public ObservableCollection<AutoDto> Autos { get; set; }
+        public ObservableCollection<ReservationDto> Reservation { get; set; }
 
         ChannelFactory<IAutoReservationService> channelFactory { get; set; }
         IAutoReservationService service { get; set; }
@@ -48,7 +48,7 @@ namespace AutoReservation.UI
         }
         private void showMyData()
         {
-            Console.WriteLine("Dump data:");
+            Console.WriteLine("====================Dump data===================");
             service.GetAllKundenDtos().ForEach((dto) =>
             {
                 Console.WriteLine("Kunde ID: " + dto.Id + ", Nachname: " + dto.Nachname);
@@ -57,6 +57,7 @@ namespace AutoReservation.UI
             {
                 Console.WriteLine("Auto ID: " + dto.Id + ", Marke: " + dto.Marke);
             });
+            Console.WriteLine("=================================================");
         }
 
     }

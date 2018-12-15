@@ -20,15 +20,15 @@
     <Grid >
         <TabControl>
             <TabItem Header="Autos">
-            <!-- INHALT DER AUTOS -->
+                <!-- INHALT DER AUTOS -->
                 <DockPanel Dock="Left" Background="{StaticResource BackgroundColorMainWindow}">
-                    
+
                     <StackPanel Width="350">
                         <Label Content="Autos:" FontSize="15" Margin="10 0 0 0"></Label>
                         <ListBox Name="AutoList" ItemsSource="{Binding Autos}" ItemTemplate="{StaticResource AutoTemplate}" Margin="10 0 10 0">
 
                         </ListBox>
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <Button>
                                 <fa:FontAwesome Icon="PlusCircle"/>
@@ -58,7 +58,9 @@
                 <!-- INHALT DER Autos - 2. Versuch -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="41*" />
+                        <ColumnDefinition Width="186*"/>
+                        <ColumnDefinition Width="291*"/>
                         <ColumnDefinition Width="20" />
                         <ColumnDefinition Width="250" />
                     </Grid.ColumnDefinitions>
@@ -68,7 +70,7 @@
                     </Grid.RowDefinitions>
 
                     <!-- List -->
-                    <Grid>
+                    <Grid Grid.ColumnSpan="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
                             <RowDefinition Height="*" />
@@ -89,7 +91,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
                         <Button HorizontalAlignment="Left" Command="{Binding RefreshAutos}">
                             <fa:FontAwesome Icon="Refresh"/>
                         </Button>
@@ -107,7 +109,7 @@
                         </ScrollViewer>
                     </StackPanel>
                     <!-- Details -->
-                    <Grid Grid.Column="3">
+                    <Grid Grid.Column="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="150" />
@@ -143,8 +145,8 @@
 
             </TabItem>
             <TabItem Header="Reservationen">
-            <!-- INHALT DER RESERVATIONEN -->
-                
+                <!-- INHALT DER RESERVATIONEN -->
+
             </TabItem>
         </TabControl>
     </Grid>

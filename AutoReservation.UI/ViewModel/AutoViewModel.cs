@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoReservation.Common;
-using AutoReservation.Dal;
-using AutoReservation.Dal.Entities;
 using System.ServiceModel;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Common.DataTransferObjects;
