@@ -3,30 +3,15 @@
                     xmlns:local="clr-namespace:AutoReservation.UI"
                     xmlns:dataTransferObjects="clr-namespace:AutoReservation.Common.DataTransferObjects;assembly=AutoReservation.Common">
     
+    <!-- main colors -->
     <SolidColorBrush x:Key="BackgroundColorMainWindow" Color="#3D77FE" />
     <SolidColorBrush x:Key="BackgroundLighterColorMainWindow" Color="#44BCEC" />
     <SolidColorBrush x:Key="BackgroundDarkerColorMainWindow" Color="#314269" />
 
-    <DataTemplate x:Key="AutoTemplate" DataType="dataTransferObjects:AutoDto">
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Marke: "></Label>
-            <Label Content="{Binding Marke}"></Label>
-            <Label Content="Tarif: "></Label>
-            <Label Content="{Binding Tagestarif}"></Label>
-        </StackPanel>
-    </DataTemplate>
-
-    <DataTemplate x:Key="KundeTemplate" DataType="dataTransferObjects:KundeDto">
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Vorname: "></Label>
-            <Label Content="{Binding Vorname}"></Label>
-            <Label Content="Nachname: "></Label>
-            <Label Content="{Binding Nachname}"></Label>
-        </StackPanel>
-    </DataTemplate>
-
+    <!-- little helpers -->
     <Thickness x:Key="DetailViewLabelMargin" Left="25" Top="0" Right="0" Bottom="0"></Thickness>
 
+    <!-- rounded buttons -->
     <Style TargetType="Button" >
         <Setter Property="Template" >
             <Setter.Value>
@@ -52,6 +37,10 @@
 
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="30 0 20 0"></Setter>
+        <Setter Property="Padding" Value="4"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"></Setter>
+        <Setter Property="BorderBrush" Value="White"></Setter>
     </Style>
 
     <Style TargetType="TabControl">

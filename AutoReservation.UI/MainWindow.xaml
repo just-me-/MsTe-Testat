@@ -22,123 +22,56 @@
             <TabItem Header="Autos">
                 <!-- INHALT DER AUTOS -->
                 <DockPanel Dock="Left" Background="{StaticResource BackgroundColorMainWindow}">
-
                     <StackPanel Width="350">
-                        <Label Content="Autos:" FontSize="15" Margin="10 0 0 0"></Label>
-                        <ListBox Name="AutoList" ItemsSource="{Binding Autos}" ItemTemplate="{StaticResource AutoTemplate}" Margin="10 0 10 0">
+                        <Grid Grid.ColumnSpan="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="16" >
+                                Liste der Autos
+                            </Label>
+                            <DataGrid Grid.Row="1" 
+                              Name="listAutos" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
+                              SelectionMode="Single" IsReadOnly="True" 
+                              ItemsSource="{Binding Autos}" 
+                              SelectedItem="{Binding SelectedAuto}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="2*" Header="Marke" Binding="{Binding Marke}">
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="*" Header="Klasse" Binding="{Binding AutoKlasse}" />
+                                    <DataGridTextColumn Width="*" Header="Tagestarif" Binding="{Binding Tagestarif}" />
+                                    <DataGridTextColumn Width="*" Header="Basistarif" Binding="{Binding Basistarif}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
 
-                        </ListBox>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                            <Button FontSize="35">
                                 <fa:FontAwesome Icon="PlusCircle"/>
                             </Button>
-                            <Button>
+                            <Button FontSize="35">
                                 <fa:FontAwesome Icon="MinusCircle"></fa:FontAwesome>
                             </Button>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel>
                         <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
-                        <Label Content="ID" Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Id}" Padding="4" Foreground="White" Background="{StaticResource BackgroundColorMainWindow}" BorderBrush="White"></TextBox>
-                        <Label Content="Autoklasse" Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Autoklasse}" Padding="4" Foreground="White" Background="{StaticResource BackgroundColorMainWindow}" BorderBrush="White"></TextBox>
+
                         <Label Content="Marke: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Marke}" Padding="4" Foreground="White" Background="{StaticResource BackgroundColorMainWindow}" BorderBrush="White"></TextBox>
-                        <Label Content="Tarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Tagestarif}" Padding="4" Foreground="White" Background="{StaticResource BackgroundColorMainWindow}" BorderBrush="White"></TextBox>
-                        <Button Margin="100 30 100 0">
+                        <TextBox Text="{Binding Marke}"></TextBox>
+                        <Label Content="Autoklasse" Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Text="{Binding Autoklasse}"></TextBox>
+                        <Label Content="Tagestarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Text="{Binding Tagestarif}"></TextBox>
+                        <Label Content="Basistarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Text="{Binding Basisstarif}"></TextBox>
+
+                        <Button Margin="100 30 100 0" FontSize="30">
                             <fa:FontAwesome Icon="Save"/>
                         </Button>
                     </StackPanel>
                 </DockPanel>
-            </TabItem>
-            <TabItem Header="Autos v2">
-                <!-- INHALT DER Autos - 2. Versuch -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="41*" />
-                        <ColumnDefinition Width="186*"/>
-                        <ColumnDefinition Width="291*"/>
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="250" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="50" />
-                    </Grid.RowDefinitions>
-
-                    <!-- List -->
-                    <Grid Grid.ColumnSpan="3">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="16" FontWeight="UltraBold" >
-                            Liste der Autos
-                        </Label>
-                        <DataGrid Grid.Row="1"
-                      Name="dgAutos" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
-                      SelectionMode="Single" IsReadOnly="True"
-                      ItemsSource="{Binding Autos}" 
-                      SelectedItem="{Binding SelectedAuto}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Marke" Binding="{Binding Marke}" />
-                                <DataGridTextColumn Header="Auto Klasse" Binding="{Binding AutoKlasse}" />
-                                <DataGridTextColumn Header="Tagestarif" Binding="{Binding Tagestarif}" />
-                                <DataGridTextColumn Header="Basistarif" Binding="{Binding Basistarif}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
-                        <Button HorizontalAlignment="Left" Command="{Binding RefreshAutos}">
-                            <fa:FontAwesome Icon="Refresh"/>
-                        </Button>
-                        <Button HorizontalAlignment="Left" Command="{Binding NewAutos}" Margin="5,0,0,0">
-                            <fa:FontAwesome Icon="Plus"/>
-                        </Button>
-                        <Button HorizontalAlignment="Left" Command="{Binding DeleteAutos}" Margin="5,0,0,0">
-                            <fa:FontAwesome Icon="Trash"/>
-                        </Button>
-                        <Button HorizontalAlignment="Left" Command="{Binding SaveAutos}" Margin="5,0,0,0">
-                            <fa:FontAwesome Icon="Save"/>
-                        </Button>
-                        <ScrollViewer Margin="5,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <TextBlock Text="{Binding ErrorText}" Foreground="Red"/>
-                        </ScrollViewer>
-                    </StackPanel>
-                    <!-- Details -->
-                    <Grid Grid.Column="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="150" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="1">Typ</Label>
-                        <Label Grid.Row="2">Marke</Label>
-                        <Label Grid.Row="3">Tagestarif</Label>
-                        <Label Grid.Row="4">Basistarif</Label>
-
-                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
-                   FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
-                            Auto bearbeiten / erfassen
-                        </Label>
-                        <ComboBox Grid.Column="1" Grid.Row="1" />
-                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedAuto.Marke}" />
-                        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedAuto.Tagestarif}" />
-                        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedAuto.Basistarif}" />
-                    </Grid>
-                </Grid>
-
             </TabItem>
             <TabItem Header="Kunden">
                 <!-- INHALT DER KUNDEN -->
