@@ -60,13 +60,13 @@
                         <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
 
                         <Label Content="Marke: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Path=SelectedAuto.Marke}"></TextBox>
+                        <TextBox Name="AutoMarke"></TextBox>
                         <Label Content="Autoklasse" Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Autoklasse}"></TextBox>
+                        <TextBox Name="AutoKlasse"></TextBox>
                         <Label Content="Tagestarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding SelectedAuto.Tagestarif}"></TextBox>
+                        <TextBox Name="AutoTagestarif"></TextBox>
                         <Label Content="Basistarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding SelectedAuto.Basisstarif}"></TextBox>
+                        <TextBox Name="AutoBasistarif"></TextBox>
 
                         <Button Margin="100 30 100 0" FontSize="30">
                             <fa:FontAwesome Icon="Save"/>

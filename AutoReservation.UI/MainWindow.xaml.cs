@@ -28,7 +28,6 @@ namespace AutoReservation.UI
         public MainWindow()
         {
             InitFormData();
-            this.DataContext = this;
             InitializeComponent();
         }
 
@@ -45,9 +44,24 @@ namespace AutoReservation.UI
         }
         private void AutoSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Console.WriteLine("Entered"); 
-            var auto = listAutos.SelectedItem as AutoDto;
-            SelectedAuto = auto;
+            SelectedAuto = listAutos.SelectedItem as AutoDto;
+            clearAutoForm();
+            loadIntoAutoForm();
+        }
+        // Helpers Auto
+        private void loadIntoAutoForm()
+        {
+            AutoMarke.Text = SelectedAuto.Marke;
+            AutoKlasse.Text = SelectedAuto.AutoKlasse.ToString();
+            AutoTagestarif.Text = SelectedAuto.Tagestarif.ToString();
+            AutoBasistarif.Text = SelectedAuto.Basistarif.ToString();
+        }
+        private void clearAutoForm()
+        {
+            AutoMarke.Text = "";
+            AutoKlasse.Text = "";
+            AutoTagestarif.Text = "";
+            AutoBasistarif.Text = "";
         }
 
 
