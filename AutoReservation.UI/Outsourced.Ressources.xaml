@@ -54,9 +54,10 @@
     <Style TargetType="TabItem">
         <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}" />
         <Setter Property="BorderThickness" Value="0 5" />
-        <Setter Property="Width" Value="100" />
+        <Setter Property="Margin" Value="0 0 0 1" />
+        <Setter Property="Width" Value="90" />
         <Setter Property="Foreground" Value="White"></Setter>
-        <Setter Property="Height" Value="40"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">

@@ -35,7 +35,8 @@
                               Name="listAutos" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                               SelectionMode="Single" IsReadOnly="True" 
                               ItemsSource="{Binding Autos}" 
-                              SelectedItem="{Binding SelectedAuto}">
+                              SelectedItem="{Binding SelectedAuto}"
+                              MouseDoubleClick="AutoSelectedListBox_OnMouseDoubleClick">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="2*" Header="Marke" Binding="{Binding Marke}">
                                     </DataGridTextColumn>
@@ -59,13 +60,13 @@
                         <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
 
                         <Label Content="Marke: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Marke}"></TextBox>
+                        <TextBox Text="{Binding Path=SelectedAuto.Marke}"></TextBox>
                         <Label Content="Autoklasse" Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Text="{Binding Autoklasse}"></TextBox>
                         <Label Content="Tagestarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Tagestarif}"></TextBox>
+                        <TextBox Text="{Binding SelectedAuto.Tagestarif}"></TextBox>
                         <Label Content="Basistarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Text="{Binding Basisstarif}"></TextBox>
+                        <TextBox Text="{Binding SelectedAuto.Basisstarif}"></TextBox>
 
                         <Button Margin="100 30 100 0" FontSize="30">
                             <fa:FontAwesome Icon="Save"/>
