@@ -76,10 +76,143 @@
             </TabItem>
             <TabItem Header="Kunden">
                 <!-- INHALT DER KUNDEN -->
+                <DockPanel Dock="Left" Background="{StaticResource BackgroundColorMainWindow}">
+                    <StackPanel Width="350">
+                        <Grid Grid.ColumnSpan="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="16" >
+                                Liste der Kunden
+                            </Label>
+                            <DataGrid Grid.Row="1" 
+                              Name="listKunden" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
+                              SelectionMode="Single" IsReadOnly="True" 
+                              ItemsSource="{Binding Kunden}" 
+                              SelectedItem="{Binding SelectedKunde}"
+                              MouseDoubleClick="KundeSelectedListBox_OnMouseDoubleClick">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="*" Header="Nachname" Binding="{Binding Nachname}" />
+                                    <DataGridTextColumn Width="*" Header="Vorname" Binding="{Binding Vorname}" />
+                                    <DataGridTextColumn Width="*" Header="Geburtsdatum" Binding="{Binding Geburtsdatum, StringFormat=\{0:dd.MM.yyyy\}}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
 
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                            <Button FontSize="35">
+                                <fa:FontAwesome Icon="PlusCircle"/>
+                            </Button>
+                            <Button FontSize="35">
+                                <fa:FontAwesome Icon="MinusCircle"></fa:FontAwesome>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
+
+                        <Label Content="Vorname: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="KundeVorname"></TextBox>
+                        <Label Content="Nachname: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="KundeNachname"></TextBox>
+                        <Label Content="Geburtsdatum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="KundeGeburtsdatum"></TextBox>
+
+                        <Button Margin="100 30 100 0" FontSize="30">
+                            <fa:FontAwesome Icon="Save"/>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Reservationen">
                 <!-- INHALT DER RESERVATIONEN -->
+                <DockPanel Dock="Left" Background="{StaticResource BackgroundColorMainWindow}">
+                    <StackPanel Width="350">
+                        <Grid Grid.ColumnSpan="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="16" >
+                                Liste der Reservationen
+                            </Label>
+                            <DataGrid Grid.Row="1" 
+                              Name="listReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
+                              SelectionMode="Single" IsReadOnly="True" 
+                              ItemsSource="{Binding Reservationen}" 
+                              SelectedItem="{Binding SelectedReservation}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="*" Header="Reservations Nr." Binding="{Binding ReservationsNr}" />
+                                    <DataGridTextColumn Width="*" Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}}" />
+                                    <DataGridTextColumn Width="*" Header="Bis" Binding="{Binding Bis, StringFormat=\{0:dd.MM.yyyy\}}" />
+                                    <DataGridTextColumn Width="*" Header="Auto" Binding="{Binding Auto.Marke}" />
+                                    <DataGridTextColumn Width="*" Header="Nachname" Binding="{Binding Kunde.Nachname}" />
+                                    <DataGridTextColumn Width="*" Header="Vorname" Binding="{Binding Kunde.Vorname}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                            <Button FontSize="35">
+                                <fa:FontAwesome Icon="PlusCircle"/>
+                            </Button>
+                            <Button FontSize="35">
+                                <fa:FontAwesome Icon="MinusCircle"></fa:FontAwesome>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
+                        
+                        <Label Content="Reservations Nr.: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="Nr" IsReadOnly="True" />
+                        <Label Content="Von-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="Von"></TextBox>
+                        <Label Content="Bis-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="Bis"></TextBox>
+
+                        <Label Content="Kunde: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <ComboBox Background="{StaticResource BackgroundColorMainWindow}" ItemsSource="{Binding Autos}" SelectedValue="{Binding SelectedAutoId}" SelectedValuePath="Id">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorMainWindow}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColorMainWindow}">
+                                        <TextBlock Text="{Binding Marke}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <Label Content="Auto: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <ComboBox Background="{StaticResource BackgroundColorMainWindow}" ItemsSource="{Binding Kunden}" SelectedValue="{Binding SelectedKundeId}" SelectedValuePath="Id">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorMainWindow}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColorMainWindow}">
+                                        <TextBlock Text="{Binding Vorname}" />
+                                        <TextBlock Text=" " />
+                                        <TextBlock Text="{Binding Nachname}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <Button Margin="100 30 100 0" FontSize="30">
+                            <fa:FontAwesome Icon="Save"/>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
 
             </TabItem>
         </TabControl>

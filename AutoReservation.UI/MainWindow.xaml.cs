@@ -24,6 +24,7 @@ namespace AutoReservation.UI
     {
 
         public AutoDto SelectedAuto { get; set; }
+        public KundeDto SelectedKunde { get; set; }
         private MainViewModel mv { get; set; }
 
         public MainWindow()
@@ -36,6 +37,7 @@ namespace AutoReservation.UI
         private void InitFormData()
         {
             SelectedAuto = new AutoDto();
+            SelectedKunde = new KundeDto();
         }
 
         // Events - Auto Tab 
@@ -86,20 +88,40 @@ namespace AutoReservation.UI
             AutoBasistarif.Text = "";
         }
 
+        // Kunden stuff
+        private void KundeSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SelectedKunde = listKunden.SelectedItem as KundeDto;
+            clearKundeForm();
+            loadIntoKundeForm();
+        }
+        private void loadIntoKundeForm()
+        {
+            KundeVorname.Text = SelectedKunde.Vorname;
+            KundeNachname.Text = SelectedKunde.Nachname;
+            KundeGeburtsdatum.Text = SelectedKunde.Geburtsdatum.ToString();
+        }
+        private void clearKundeForm()
+        {
+            KundeVorname.Text = "";
+            KundeNachname.Text = "";
+            KundeGeburtsdatum.Text = "";
+        }
 
     }
-        /*
-        private void AddButton_OnClick(object sender, RoutedEventArgs e)
+    /*
+    private void AddButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (AvailableListBox.SelectedIndex < 0)
         {
-            if (AvailableListBox.SelectedIndex < 0)
-            {
-                MessageBox.Show("Bitte etwas auswählen...");
-                return;
-            }
-            var user = AvailableListBox.SelectedItem as UserInfo;
-            if (!AddUserToSelection(user))
-                return;
-            AvailableListBox.SelectedIndex = -1;
-        } */
+            MessageBox.Show("Bitte etwas auswählen...");
+            return;
+        }
+        var user = AvailableListBox.SelectedItem as UserInfo;
+        if (!AddUserToSelection(user))
+            return;
+        AvailableListBox.SelectedIndex = -1;
+    } */
+
 
 }

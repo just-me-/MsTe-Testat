@@ -43,6 +43,28 @@
         <Setter Property="BorderBrush" Value="White"></Setter>
     </Style>
 
+    <Style TargetType="ComboBox">
+        <Setter Property="Margin" Value="30 0 20 0"></Setter>
+        <Setter Property="Padding" Value="4"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"></Setter>
+        <Setter Property="BorderBrush" Value="White"></Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorMainWindow}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorMainWindow}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="TabControl">
         <Setter Property="BorderThickness" Value="0" />
     </Style>
