@@ -17,8 +17,8 @@ namespace AutoReservation.UI
         public ObservableCollection<AutoDto> Autos { get; set; }
         public ObservableCollection<ReservationDto> Reservation { get; set; }
 
-        ChannelFactory<IAutoReservationService> channelFactory { get; set; }
-        IAutoReservationService service { get; set; }
+        public ChannelFactory<IAutoReservationService> channelFactory { get; set; }
+        public IAutoReservationService service { get; set; }
 
         public MainViewModel()
         {
@@ -32,6 +32,8 @@ namespace AutoReservation.UI
             Reservation = new ObservableCollection<ReservationDto>(service.GetAllReservationDtos());
             Kunden = new ObservableCollection<KundeDto>(service.GetAllKundenDtos());
             Autos = new ObservableCollection<AutoDto>(service.GetAllAutoDtos());
+            // makre noch to string machen für die liste... nur für die liste 
+            // Autos.ForEach(a => a.Marke = a.Marke.ToString())
         }
 
         private void needSomeDummyData()
