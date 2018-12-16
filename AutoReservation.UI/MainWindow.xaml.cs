@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AutoReservation.UI
 {
@@ -35,6 +38,24 @@ namespace AutoReservation.UI
             Model = new MainViewModel();
             DataContext = Model;
             InitializeComponent();
+
+
+
+            //Polling
+            DispatcherTimer Timer = new DispatcherTimer();
+
+            // Send tick event each second:
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += (sender, args) =>
+            {
+                //Update View
+                listReservationen.ItemsSource = null;
+                listReservationen.ItemsSource = Model.Reservation;
+
+            };
+            Timer.Start();
+
+
         }
 
 
@@ -75,6 +96,18 @@ namespace AutoReservation.UI
             };
 
         }
+
+
+
+        private void loadIntoAutoForm(AutoDto car)
+        {
+            AutoMarke.Text = car.Marke;
+            AutoklasseTextbox.Text = car.AutoKlasse.ToString();
+            AutoTagestarif.Text = car.Tagestarif.ToString();
+            AutoBasistarif.Text = car.Basistarif.ToString();
+        }
+
+
 
         //Checks which car is selected and returns the proper DTO
         private AutoDto GetSelectedAuto()
@@ -133,18 +166,6 @@ namespace AutoReservation.UI
 
 
 
-
-
-        private void loadIntoAutoForm(AutoDto car)
-        {
-            AutoMarke.Text = car.Marke;
-            AutoklasseTextbox.Text = car.AutoKlasse.ToString();
-            AutoTagestarif.Text = car.Tagestarif.ToString();
-            AutoBasistarif.Text = car.Basistarif.ToString();
-        }
-
-
-
         /////////////////////////////////////////////Number only in Basistarfi und Tagestarif
 
 
@@ -176,7 +197,12 @@ namespace AutoReservation.UI
 
 
 
-        ////////////////////////////*****KUNDE*****//////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        ////////////////////////////////***KUNDE***//////////////////////////////////
+
 
         // Reads from From and returns a new Dto
         private KundeDto loadFromKundeForm()
@@ -185,14 +211,22 @@ namespace AutoReservation.UI
             string nachname = KundeNachname.Text;
             string gebdatText = KundeGeburtsdatum.Text;
             DateTime gebdat = DateTime.Parse(gebdatText);
-            
+
             return new KundeDto
             {
                 Nachname = nachname,
-                Vorname =  vorname,
+                Vorname = vorname,
                 Geburtsdatum = gebdat
             };
 
+        }
+
+
+        private void loadIntoKundeForm(KundeDto k)
+        {
+            KundeVorname.Text = k.Vorname;
+            KundeNachname.Text = k.Nachname;
+            KundeGeburtsdatum.Text = k.Geburtsdatum.ToShortDateString();
         }
 
         //Checks which car is selected and returns the proper DTO
@@ -250,17 +284,125 @@ namespace AutoReservation.UI
 
 
 
-        private void loadIntoKundeForm(KundeDto k)
+
+
+
+
+        ////////////////////////////*****RESER*****//////////////////////////////////////////////////////////////////////////////
+
+
+
+        // Reads from From and returns a new Dto
+        private ReservationDto loadFromReservationForm()
         {
-            KundeVorname.Text = k.Vorname;
-            KundeNachname.Text = k.Nachname;
-            KundeGeburtsdatum.Text = k.Geburtsdatum.ToShortDateString();
+
+            string vonDatText = ResVon.Text;
+            string bisDatText = ResBis.Text;
+            DateTime vonDat = DateTime.Parse(vonDatText);
+            DateTime bisDat = DateTime.Parse(bisDatText);
+
+            KundeDto k = ResKunde.SelectionBoxItem as KundeDto;
+            AutoDto a = ResAuto.SelectionBoxItem as AutoDto;
+
+            return new ReservationDto
+            {
+                Von = vonDat,
+                Bis = bisDat,
+                Kunde = k,
+                Auto = a
+            };
+
+        }
+
+
+        private void loadIntoReservationForm(ReservationDto r)
+        {
+            ResVon.Text = r.Von.ToShortDateString();
+            ResBis.Text = r.Bis.ToShortDateString();
+            ResKunde.SelectedValue = r.Kunde;
+            ResAuto.SelectedValue = r.Auto;
+        }
+
+        //Checks which reservation is selected and returns the proper DTO
+        private ReservationDto GetSelectedReservation()
+        {
+            int index = listReservationen.SelectedIndex;
+            return Model.Reservation.ElementAt(index); //Die index von selected und Kunden ist gleich weil sie gebindet sind.
+
         }
 
 
 
-        ////////////////////////////////***Reservationen***//////////////////////////////////
-        
+        // adden:
+        private void ReservationAddButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ReservationDto reservationToAdd = loadFromReservationForm();
+            Model.service.InsertReservation(reservationToAdd);  //TODO check exeption und messagebox when fail
+            Model.Reservation.Add(reservationToAdd);
+        }
+
+
+        // removen:
+        private void ReservationRemoveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ReservationDto targetResToDelete = GetSelectedReservation();
+            Model.service.DeleteReservation(targetResToDelete);
+            Model.Reservation.Remove(targetResToDelete);  //TODO "U SURE? büerall"
+
+        }
+
+        // updaten:
+        private void ReservationSaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ReservationDto targetReservationToUpdate = GetSelectedReservation();
+            ReservationDto newReservation = loadFromReservationForm();
+
+            //totaler gurkencode again
+            targetReservationToUpdate.Von = newReservation.Von;
+            targetReservationToUpdate.Bis = newReservation.Bis;
+            targetReservationToUpdate.Kunde = newReservation.Kunde;
+            targetReservationToUpdate.Auto = newReservation.Auto;
+            Model.service.UpdateReservation(targetReservationToUpdate);
+
+            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
+            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+            Model.Reservation.Remove(targetReservationToUpdate);  //TODO PRoperty Changed implementieren
+            Model.Reservation.Add(newReservation);
+        }
+
+
+        private void ReservationSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ReservationDto selectedRes = GetSelectedReservation();
+            loadIntoReservationForm(selectedRes);
+        }
+
+
+        private void OnOnlyActiveReservationsCheckecd(object sender, RoutedEventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            IEnumerable<ReservationDto> targetEntries = Model.Reservation.Where(r => r.Von < now && r.Bis > now);
+            Model.Reservation = new ObservableCollection<ReservationDto>(targetEntries);
+
+            //Update View
+            listReservationen.ItemsSource = null;
+            listReservationen.ItemsSource = Model.Reservation;
+            //Model.Reservation.CollectionChanged(this, new NotifyCollectionChangedEventArgs()...);
+        }
+
+
+        private void OnOnlyActiveReservationsUnCheckecd(object sender, RoutedEventArgs e)
+        {
+            Model.Reservation = new ObservableCollection<ReservationDto>(Model.service.GetAllReservationDtos());
+            //Update View
+            listReservationen.ItemsSource = null;
+            listReservationen.ItemsSource = Model.Reservation;
+        }
+
+
+
+
+
 
     }
 }

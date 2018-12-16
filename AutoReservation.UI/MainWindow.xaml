@@ -148,10 +148,11 @@
                             <DataGrid Grid.Row="1" 
                               Name="listReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                               SelectionMode="Single" IsReadOnly="True" 
-                              ItemsSource="{Binding Reservation}" Grid.ColumnSpan="3" >
+                              ItemsSource="{Binding Reservation}" Grid.ColumnSpan="3" 
+                              MouseDoubleClick="ReservationSelectedListBox_OnMouseDoubleClick">
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="*" Header="Reservations Nr." Binding="{Binding ReservationsNr}" />
+                                   
                                     <DataGridTextColumn Width="*" Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}}" />
                                     <DataGridTextColumn Width="*" Header="Bis" Binding="{Binding Bis, StringFormat=\{0:dd.MM.yyyy\}}" />
                                     <DataGridTextColumn Width="*" Header="Auto" Binding="{Binding Auto.Marke}" />
@@ -162,29 +163,62 @@
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
-                            <Button FontSize="35">
+                            <Button FontSize="35" Click="ReservationAddButton_OnClick">
                                 <fa:FontAwesome Icon="PlusCircle"/>
                             </Button>
-                            <Button FontSize="35">
+                            <Button FontSize="35" Click="ReservationRemoveButton_OnClick">
                                 <fa:FontAwesome Icon="MinusCircle"></fa:FontAwesome>
                             </Button>
-                            <Button FontSize="35">
-                                <fa:FontAwesome Icon="ClockOutline"></fa:FontAwesome>
-                            </Button>
+                            
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label>Show Only Active Reservations: </Label>
+                        <CheckBox Name="OnlyActiveCheckbox" 
+                                  VerticalContentAlignment="Center"
+                                  IsChecked="False"
+                                  Checked="OnOnlyActiveReservationsCheckecd"
+                                  Unchecked="OnOnlyActiveReservationsUnCheckecd">
+
+                        </CheckBox>
                     </StackPanel>
+                        </StackPanel>
                     <StackPanel>
                         <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
 
-                        <Label Content="Reservations Nr.: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="Nr" IsReadOnly="True" />
+                        <!--<Label Content="Reservations Nr.: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <TextBox Name="ResNr" IsReadOnly="True" />  ==> DTO hat keine Id-->
                         <Label Content="Von-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="Von"></TextBox>
+                        <TextBox Name="ResVon"></TextBox>
                         <Label Content="Bis-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="Bis"></TextBox>
+                        <TextBox Name="ResBis"></TextBox>
 
                         <Label Content="Kunde: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <ComboBox Background="{StaticResource BackgroundColorMainWindow}" ItemsSource="{Binding Autos}" SelectedValue="{Binding SelectedAutoId}" SelectedValuePath="Id">
+                        <ComboBox Name="ResKunde" Background="{StaticResource BackgroundColorMainWindow}" 
+                                  ItemsSource="{Binding Kunden}" Foreground="Black">
+
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorMainWindow}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColorMainWindow}">
+                                        <TextBlock Text="{Binding Vorname}" />
+                                        <TextBlock Text=" " />
+                                        <TextBlock Text="{Binding Nachname}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                         
+                        </ComboBox>
+
+                        <Label Content="Auto: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
+                        <ComboBox Name="ResAuto" Background="{StaticResource BackgroundColorMainWindow}" 
+                                  ItemsSource="{Binding Autos}" Foreground="Black">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
                                     <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
@@ -195,25 +229,6 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColorMainWindow}">
                                         <TextBlock Text="{Binding Marke}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                        <Label Content="Auto: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <ComboBox Background="{StaticResource BackgroundColorMainWindow}" ItemsSource="{Binding Kunden}" SelectedValue="{Binding SelectedKundeId}" SelectedValuePath="Id">
-                            <ComboBox.ItemContainerStyle>
-                                <Style TargetType="ComboBoxItem">
-                                    <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
-                                    <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorMainWindow}"/>
-                                </Style>
-                            </ComboBox.ItemContainerStyle>
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Background="{StaticResource BackgroundColorMainWindow}">
-                                        <TextBlock Text="{Binding Vorname}" />
-                                        <TextBlock Text=" " />
-                                        <TextBlock Text="{Binding Nachname}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
