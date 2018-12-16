@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.UI
 {
@@ -333,9 +335,35 @@ namespace AutoReservation.UI
         private void ReservationAddButton_OnClick(object sender, RoutedEventArgs e)
         {
             ReservationDto reservationToAdd = loadFromReservationForm();
-            
-            Model.service.InsertReservation(reservationToAdd);  //TODO check exeption und messagebox when fail
-            Model.Reservation.Add(reservationToAdd);
+            try
+            {
+                Model.service.InsertReservation(reservationToAdd); //TODO check exeption und messagebox when fail
+                Model.Reservation.Add(reservationToAdd);
+            }
+            catch (FaultException<AutoUnavailableFault> ex)
+            {
+                string msg = ex.Detail.Message;
+                MessageBoxResult result = MessageBox.Show(msg,
+                    "Fault!",
+                    MessageBoxButton.OK);
+
+            }
+            catch (FaultException<InvalidDateRangeFault> ex)
+            {
+                string msg = ex.Detail.Message;
+                MessageBoxResult result = MessageBox.Show(msg,
+                    "Fault!",
+                    MessageBoxButton.OK);
+
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                MessageBoxResult result = MessageBox.Show(msg,
+                    "Fault!",
+                    MessageBoxButton.OK);
+            }
+
         }
 
 
@@ -354,15 +382,11 @@ namespace AutoReservation.UI
             ReservationDto targetReservationToUpdate = GetSelectedReservation();
             ReservationDto newReservation = loadFromReservationForm();
 
-            //totaler gurkencode again
-            targetReservationToUpdate.Von = newReservation.Von;
-            targetReservationToUpdate.Bis = newReservation.Bis;
-            targetReservationToUpdate.Kunde = newReservation.Kunde;
-            targetReservationToUpdate.Auto = newReservation.Auto;
-            Model.service.UpdateReservation(targetReservationToUpdate);
+            //alte reservation löschen, und neue hinzufügen. sonst gibt es auto unavailable exc.
+            Model.service.DeleteReservation(targetReservationToUpdate);
+            Model.service.InsertReservation(newReservation);
 
-            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+            //IObservable updaten
             Model.Reservation.Remove(targetReservationToUpdate);  //TODO PRoperty Changed implementieren
             Model.Reservation.Add(newReservation);
         }
