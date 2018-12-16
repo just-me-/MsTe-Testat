@@ -112,12 +112,15 @@ namespace AutoReservation.BusinessLayer
             DateTime wantedStart = res.Von;
             DateTime wantedEnd = res.Bis;
             int myAuto = res.AutoId;
+            int ich = res.KundeId;
+
+     
 
             List<Reservation> reservations = List;
 
             var reservedDates =
                 from r in reservations
-                where r.AutoId == myAuto
+                where r.AutoId == myAuto && r.KundeId != ich
                 select new
                 {
                     r.Von,

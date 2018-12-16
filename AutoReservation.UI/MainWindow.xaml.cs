@@ -382,13 +382,58 @@ namespace AutoReservation.UI
             ReservationDto targetReservationToUpdate = GetSelectedReservation();
             ReservationDto newReservation = loadFromReservationForm();
 
-            //alte reservation löschen, und neue hinzufügen. sonst gibt es auto unavailable exc.
-            Model.service.DeleteReservation(targetReservationToUpdate);
-            Model.service.InsertReservation(newReservation);
 
-            //IObservable updaten
-            Model.Reservation.Remove(targetReservationToUpdate);  //TODO PRoperty Changed implementieren
-            Model.Reservation.Add(newReservation);
+
+            //alte reservation löschen, und neue hinzufügen. sonst gibt es auto unavailable exc.
+            try
+            {
+                Model.service.DeleteReservation(targetReservationToUpdate);
+                Model.service.InsertReservation(newReservation);
+                Model.Reservation.Remove(targetReservationToUpdate); //TODO PRoperty Changed implementieren
+                Model.Reservation.Add(newReservation);
+            }
+
+            catch (FaultException<AutoUnavailableFault> ex)
+            {
+                string msg = ex.Detail.Message;
+                MessageBoxResult result = MessageBox.Show(msg,
+                    "Fault!",
+                    MessageBoxButton.OK);
+
+            }
+            catch (FaultException<InvalidDateRangeFault> ex)
+            {
+                string msg = ex.Detail.Message;
+                MessageBoxResult result = MessageBox.Show(msg,
+                    "Fault!",
+                    MessageBoxButton.OK);
+
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                MessageBoxResult result = MessageBox.Show(msg,
+                    "Fault!",
+                    MessageBoxButton.OK);
+            }
+
+            /*
+
+            //totaler gurkencode again
+            targetReservationToUpdate.Von = newReservation.Von;
+            targetReservationToUpdate.Bis = newReservation.Bis;
+            targetReservationToUpdate.Kunde = newReservation.Kunde;
+            targetReservationToUpdate.Auto = newReservation.Auto;
+            Model.service.UpdateReservation(targetReservationToUpdate);
+            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
+            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+
+    */
+
+
+
+
+
         }
 
 
