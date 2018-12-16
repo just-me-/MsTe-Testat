@@ -133,9 +133,14 @@ namespace AutoReservation.UI
         //Auto removen:
         private void AutoRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            AutoDto targetAutoToDelete = GetSelectedAuto();
-            Model.service.DeleteAuto(targetAutoToDelete);
-            Model.Autos.Remove(targetAutoToDelete);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+
+                AutoDto targetAutoToDelete = GetSelectedAuto();
+                Model.service.DeleteAuto(targetAutoToDelete);
+                Model.Autos.Remove(targetAutoToDelete);
+            }
 
         }
 
@@ -249,9 +254,13 @@ namespace AutoReservation.UI
         //Kunde removen:
         private void KundeRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            KundeDto targetKundeToDelete = GetSelectedKunde();
-            Model.service.DeleteKunde(targetKundeToDelete);
-            Model.Kunden.Remove(targetKundeToDelete);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                KundeDto targetKundeToDelete = GetSelectedKunde();
+                Model.service.DeleteKunde(targetKundeToDelete);
+                Model.Kunden.Remove(targetKundeToDelete);
+            }
 
         }
 
@@ -370,9 +379,13 @@ namespace AutoReservation.UI
         // removen:
         private void ReservationRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ReservationDto targetResToDelete = GetSelectedReservation();
-            Model.service.DeleteReservation(targetResToDelete);
-            Model.Reservation.Remove(targetResToDelete);  //TODO "U SURE? büerall"
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                ReservationDto targetResToDelete = GetSelectedReservation();
+                Model.service.DeleteReservation(targetResToDelete);
+                Model.Reservation.Remove(targetResToDelete);
+            }
 
         }
 
@@ -429,9 +442,6 @@ namespace AutoReservation.UI
             //Mache es hier the simple way. Wie gesagt, sehr gurkig.
 
     */
-
-
-
 
 
         }
