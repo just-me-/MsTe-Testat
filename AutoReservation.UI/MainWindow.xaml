@@ -194,7 +194,8 @@
 
                         <Label Content="Kunde: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <ComboBox Name="ResKunde" Background="{StaticResource BackgroundColorMainWindow}" 
-                                  ItemsSource="{Binding Kunden}" Foreground="Black">
+                                  ItemsSource="{Binding Kunden}" Foreground="Black"
+                                  SelectedValuePath="Id">
 
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
@@ -218,7 +219,8 @@
 
                         <Label Content="Auto: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <ComboBox Name="ResAuto" Background="{StaticResource BackgroundColorMainWindow}" 
-                                  ItemsSource="{Binding Autos}" Foreground="Black">
+                                  ItemsSource="{Binding Autos}" Foreground="Black"
+                                  SelectedValuePath="Id">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
                                     <Setter Property="Background" Value="{StaticResource BackgroundColorMainWindow}"/>
@@ -234,7 +236,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <Button Margin="100 30 100 0" FontSize="30">
+                        <Button Margin="100 30 100 0" FontSize="30" Click="ReservationSaveButton_OnClick">
                             <fa:FontAwesome Icon="Save"/>
                         </Button>
                     </StackPanel>

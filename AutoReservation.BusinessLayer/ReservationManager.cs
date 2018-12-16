@@ -57,8 +57,11 @@ namespace AutoReservation.BusinessLayer
         }
         private static Reservation updateReservation(Reservation reservation, EntityState state)
         {
-            checkForAvailabilityException(reservation);
-            checkForDateRangeException(reservation);
+            if (state != EntityState.Deleted)
+            {
+                checkForAvailabilityException(reservation);
+                checkForDateRangeException(reservation);
+            }
 
             return UsingContext(context =>
             {

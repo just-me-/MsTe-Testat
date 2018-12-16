@@ -45,7 +45,7 @@ namespace AutoReservation.UI
             DispatcherTimer Timer = new DispatcherTimer();
 
             // Send tick event each second:
-            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Interval = TimeSpan.FromSeconds(60);
             Timer.Tick += (sender, args) =>
             {
                 //Update View
@@ -197,10 +197,6 @@ namespace AutoReservation.UI
 
 
 
-
-
-
-
         ////////////////////////////////***KUNDE***//////////////////////////////////
 
 
@@ -319,8 +315,8 @@ namespace AutoReservation.UI
         {
             ResVon.Text = r.Von.ToShortDateString();
             ResBis.Text = r.Bis.ToShortDateString();
-            ResKunde.SelectedValue = r.Kunde;
-            ResAuto.SelectedValue = r.Auto;
+            ResKunde.SelectedValue = r.Kunde.Id;
+            ResAuto.SelectedValue = r.Auto.Id;
         }
 
         //Checks which reservation is selected and returns the proper DTO
@@ -337,6 +333,7 @@ namespace AutoReservation.UI
         private void ReservationAddButton_OnClick(object sender, RoutedEventArgs e)
         {
             ReservationDto reservationToAdd = loadFromReservationForm();
+            
             Model.service.InsertReservation(reservationToAdd);  //TODO check exeption und messagebox when fail
             Model.Reservation.Add(reservationToAdd);
         }
