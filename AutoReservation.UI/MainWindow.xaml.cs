@@ -145,7 +145,34 @@ namespace AutoReservation.UI
 
 
 
+        /////////////////////////////////////////////Number only in Basistarfi und Tagestarif
 
+
+        private void OnKeyDown(object o, KeyEventArgs a)
+        {
+
+            Key pressedKey = a.Key;
+            switch (pressedKey)
+            {
+                case Key.D1:
+                case Key.D2:
+                case Key.D3:
+                case Key.D4:
+                case Key.D5:
+                case Key.D6:
+                case Key.D7:
+                case Key.D8:
+                case Key.D9:
+                case Key.D0:
+                case Key.Back:
+                    break;
+
+                default:
+                    a.Handled = true;
+                    break;
+            }
+
+        }
 
 
 
@@ -223,15 +250,18 @@ namespace AutoReservation.UI
 
 
 
-
-
-
         private void loadIntoKundeForm(KundeDto k)
         {
             KundeVorname.Text = k.Vorname;
             KundeNachname.Text = k.Nachname;
             KundeGeburtsdatum.Text = k.Geburtsdatum.ToShortDateString();
         }
+
+
+
+        ////////////////////////////////***Reservationen***//////////////////////////////////
+        
+
     }
 }
 

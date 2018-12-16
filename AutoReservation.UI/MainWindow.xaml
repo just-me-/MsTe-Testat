@@ -65,9 +65,9 @@
                         <Label Content="Autoklasse" Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Name="AutoklasseTextbox"></TextBox>
                         <Label Content="Tagestarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="AutoTagestarif"></TextBox>
+                        <TextBox Name="AutoTagestarif" KeyDown="OnKeyDown"></TextBox>
                         <Label Content="Basistarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="AutoBasistarif"></TextBox>
+                        <TextBox Name="AutoBasistarif" KeyDown="OnKeyDown"></TextBox>
 
                         <Button Margin="100 30 100 0" FontSize="30" Click="AutoSaveButton_OnClick">
                             <fa:FontAwesome Icon="Save"/>
@@ -135,19 +135,20 @@
                         <Grid Grid.ColumnSpan="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="53*"/>
-                                <ColumnDefinition Width="297*"/>
+                                <ColumnDefinition Width="21*"/>
+                                <ColumnDefinition Width="276*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="16" >
+                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" FontSize="16" >
                                 Liste der Reservationen
                             </Label>
                             <DataGrid Grid.Row="1" 
                               Name="listReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                               SelectionMode="Single" IsReadOnly="True" 
-                              ItemsSource="{Binding Reservation}" Grid.ColumnSpan="2" >
+                              ItemsSource="{Binding Reservation}" Grid.ColumnSpan="3" >
 
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Reservations Nr." Binding="{Binding ReservationsNr}" />
