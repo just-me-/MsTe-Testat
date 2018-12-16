@@ -38,6 +38,9 @@ namespace AutoReservation.UI
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // Reads from AutoForm and returns a new AutoDto
         private AutoDto loadFromAutoForm()
         {
@@ -139,56 +142,96 @@ namespace AutoReservation.UI
             AutoTagestarif.Text = car.Tagestarif.ToString();
             AutoBasistarif.Text = car.Basistarif.ToString();
         }
-    }
-}
 
 
-//private void clearAutoForm()
-        //{
-        //    AutoMarke.Text = "";
-        //    AutoKlasse.Text = "";
-        //    AutoTagestarif.Text = "";
-        //    AutoBasistarif.Text = "";
-        //}
 
 
-/*
 
-        // Kunden stuff
+
+
+        ////////////////////////////*****KUNDE*****//////////////////////////////////////////////////////////////////////////////
+
+        // Reads from From and returns a new Dto
+        private KundeDto loadFromKundeForm()
+        {
+            string vorname = KundeVorname.Text;
+            string nachname = KundeNachname.Text;
+            string gebdatText = KundeGeburtsdatum.Text;
+            DateTime gebdat = DateTime.Parse(gebdatText);
+            
+            return new KundeDto
+            {
+                Nachname = nachname,
+                Vorname =  vorname,
+                Geburtsdatum = gebdat
+            };
+
+        }
+
+        //Checks which car is selected and returns the proper DTO
+        private KundeDto GetSelectedKunde()
+        {
+            int index = listKunden.SelectedIndex;
+            return Model.Kunden.ElementAt(index); //Die index von selected und Kunden ist gleich weil sie gebindet sind.
+
+        }
+
+
+
+        //Kunde adden:
+        private void KundeAddButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            KundeDto kundeToAdd = loadFromKundeForm();
+            Model.service.InsertKunde(kundeToAdd);
+            Model.Kunden.Add(kundeToAdd);
+        }
+
+
+        //Kunde removen:
+        private void KundeRemoveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            KundeDto targetKundeToDelete = GetSelectedKunde();
+            Model.service.DeleteKunde(targetKundeToDelete);
+            Model.Kunden.Remove(targetKundeToDelete);
+
+        }
+
+        //Kunde updaten:
+        private void KundeSaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            KundeDto targetKundeToUpdate = GetSelectedKunde();
+            KundeDto newKunde = loadFromKundeForm();
+
+            //totaler gurkencode again
+            targetKundeToUpdate.Nachname = newKunde.Nachname;
+            targetKundeToUpdate.Vorname = newKunde.Vorname;
+            targetKundeToUpdate.Geburtsdatum = newKunde.Geburtsdatum;
+            Model.service.UpdateKunde(targetKundeToUpdate);
+
+            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
+            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+            Model.Kunden.Remove(targetKundeToUpdate);
+            Model.Kunden.Add(newKunde);
+        }
+
+
         private void KundeSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            SelectedKunde = listKunden.SelectedItem as KundeDto;
-            clearKundeForm();
-            loadIntoKundeForm();
-        }
-        private void loadIntoKundeForm()
-        {
-            KundeVorname.Text = SelectedKunde.Vorname;
-            KundeNachname.Text = SelectedKunde.Nachname;
-            KundeGeburtsdatum.Text = SelectedKunde.Geburtsdatum.ToString();
-        }
-        private void clearKundeForm()
-        {
-            KundeVorname.Text = "";
-            KundeNachname.Text = "";
-            KundeGeburtsdatum.Text = "";
+            KundeDto selectedKunde = GetSelectedKunde();
+            loadIntoKundeForm(selectedKunde);
         }
 
+
+
+
+
+
+        private void loadIntoKundeForm(KundeDto k)
+        {
+            KundeVorname.Text = k.Vorname;
+            KundeNachname.Text = k.Nachname;
+            KundeGeburtsdatum.Text = k.Geburtsdatum.ToShortDateString();
+        }
     }
-
-        */
-    /*
-    private void AddButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        if (AvailableListBox.SelectedIndex < 0)
-        {
-            MessageBox.Show("Bitte etwas auswählen...");
-            return;
-        }
-        var user = AvailableListBox.SelectedItem as UserInfo;
-        if (!AddUserToSelection(user))
-            return;
-        AvailableListBox.SelectedIndex = -1;
-    } */
-
+}
 
