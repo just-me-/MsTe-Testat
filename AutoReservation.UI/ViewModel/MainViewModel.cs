@@ -17,6 +17,10 @@ namespace AutoReservation.UI
         public ObservableCollection<AutoDto> Autos { get; set; }
         public ObservableCollection<ReservationDto> Reservation { get; set; }
 
+        public AutoDto SelectedAuto { get; set; }
+        public KundeDto SelectedKunde { get; set; }
+        //^^^^ wenn wir im DataGrid SelectedItem="{Binding SelectedKunde}" hätten, könnte man das nutzen, machen wir aber mit list.SelectedItem
+
         public ChannelFactory<IAutoReservationService> channelFactory { get; set; }
         public IAutoReservationService service { get; set; }
 
@@ -32,8 +36,13 @@ namespace AutoReservation.UI
             Reservation = new ObservableCollection<ReservationDto>(service.GetAllReservationDtos());
             Kunden = new ObservableCollection<KundeDto>(service.GetAllKundenDtos());
             Autos = new ObservableCollection<AutoDto>(service.GetAllAutoDtos());
-            // makre noch to string machen für die liste... nur für die liste 
+            // marke noch to string machen für die liste... nur für die liste 
             // Autos.ForEach(a => a.Marke = a.Marke.ToString())
+            //(Toms antwort) --> AutoDto.Marke ist ein string ?!!=?
+
+            SelectedAuto = new AutoDto();
+            SelectedKunde = new KundeDto();
+
         }
 
         private void needSomeDummyData()
@@ -48,6 +57,8 @@ namespace AutoReservation.UI
             kunde.Nachname = "Muster";
             service.InsertKunde(kunde);
         }
+
+
         private void showMyData()
         {
             Console.WriteLine("====================Dump data===================");

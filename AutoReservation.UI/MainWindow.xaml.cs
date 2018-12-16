@@ -23,70 +23,136 @@ namespace AutoReservation.UI
     public partial class MainWindow : Window
     {
 
-        public AutoDto SelectedAuto { get; set; }
-        public KundeDto SelectedKunde { get; set; }
-        private MainViewModel mv { get; set; }
+        private MainViewModel Model { get; }
+        //Model hat:
+        //Lioste mit Auto, Reservation und kunde
+        //SWelected Auto und SelectedKunde
+
+
 
         public MainWindow()
         {
-            mv = new MainViewModel(); 
-            InitFormData();
+            Model = new MainViewModel();
+            DataContext = Model;
             InitializeComponent();
         }
 
-        private void InitFormData()
+
+        // Reads from AutoForm and returns a new AutoDto
+        private AutoDto loadFromAutoForm()
         {
-            SelectedAuto = new AutoDto();
-            SelectedKunde = new KundeDto();
+            string marke = AutoMarke.Text;
+
+            string klasseText = AutoklasseTextbox.Text;
+
+            AutoKlasse klasse;
+            switch (klasseText)
+            {
+                case "Luxusklasse":
+                    klasse = AutoKlasse.Luxusklasse;
+                    break;
+                case "Mittelklasse":
+                    klasse = AutoKlasse.Mittelklasse;
+                    break;
+                default:
+                    klasse = AutoKlasse.Standard;
+                    break;
+            }
+
+
+            int tagestarif = int.Parse(AutoTagestarif.Text);
+            int basistarif = int.Parse(AutoBasistarif.Text);
+
+            return new AutoDto
+            {
+                Marke = marke,
+                AutoKlasse = klasse,
+                Tagestarif = tagestarif,
+                Basistarif = basistarif
+            };
+
         }
 
-        // Events - Auto Tab 
-        private void AutoSaveButton_OnClick(object sender, RoutedEventArgs e)
+        //Checks which car is selected and returns the proper DTO
+        private AutoDto GetSelectedAuto()
         {
-            // Reset Form
-            loadFromAutoForm();
-            mv.service.UpdateAuto(SelectedAuto);
+            int index = listAutos.SelectedIndex;
+            return Model.Autos.ElementAt(index); //Die index von selected und Autos ist gleich weil sie gebindet sind.
+
         }
+
+
+
+        //Auto adden:
         private void AutoAddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //SelectedAuto = null;
-            SelectedAuto.Id = -1; // null
-            loadFromAutoForm();
-            mv.service.InsertAuto(SelectedAuto);
+            AutoDto autoToAdd = loadFromAutoForm();
+            Model.service.InsertAuto(autoToAdd);
+            Model.Autos.Add(autoToAdd);
         }
-        private void AutoDeleteButton_OnClick(object sender, RoutedEventArgs e)
+
+
+        //Auto removen:
+        private void AutoRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
+            AutoDto targetAutoToDelete = GetSelectedAuto();
+            Model.service.DeleteAuto(targetAutoToDelete);
+            Model.Autos.Remove(targetAutoToDelete);
+
         }
+
+        //Auto updaten:
+        private void AutoSaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AutoDto targetAutoToUpdate = GetSelectedAuto();
+            AutoDto newAuto = loadFromAutoForm();
+
+            //totaler gurkencode, ist mir aber egal
+            //Die Idee mit einem Member "selectedCar" war schon nicht schlecht, aber eig müsste man eh ein Binding machen...
+            targetAutoToUpdate.AutoKlasse = newAuto.AutoKlasse;
+            targetAutoToUpdate.Marke = newAuto.Marke;
+            targetAutoToUpdate.Basistarif = newAuto.Basistarif;
+            targetAutoToUpdate.Tagestarif = newAuto.Tagestarif;
+            Model.service.UpdateAuto(targetAutoToUpdate);
+            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
+            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+            Model.Autos.Remove(targetAutoToUpdate);
+            Model.Autos.Add(newAuto);
+        }
+
+
         private void AutoSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            SelectedAuto = listAutos.SelectedItem as AutoDto;
-            clearAutoForm();
-            loadIntoAutoForm();
+            AutoDto selectedCar = GetSelectedAuto();
+            loadIntoAutoForm(selectedCar);
         }
-        // Helpers Auto
-        private void loadFromAutoForm()
+
+
+
+
+
+
+        private void loadIntoAutoForm(AutoDto car)
         {
-            String a = AutoMarke.Text; 
-            SelectedAuto.Marke = AutoMarke.Text;
-            // 2do.. pasring to 
-            //SelectedAuto.AutoKlasse = AutoKlasse.Text;
-            SelectedAuto.Tagestarif = 12;// AutoTagestarif.Text;
-            SelectedAuto.Basistarif = 22;// AutoBasistarif.Text;
+            AutoMarke.Text = car.Marke;
+            AutoklasseTextbox.Text = car.AutoKlasse.ToString();
+            AutoTagestarif.Text = car.Tagestarif.ToString();
+            AutoBasistarif.Text = car.Basistarif.ToString();
         }
-        private void loadIntoAutoForm()
-        {
-            AutoMarke.Text = SelectedAuto.Marke;
-            AutoKlasse.Text = SelectedAuto.AutoKlasse.ToString();
-            AutoTagestarif.Text = SelectedAuto.Tagestarif.ToString();
-            AutoBasistarif.Text = SelectedAuto.Basistarif.ToString();
-        }
-        private void clearAutoForm()
-        {
-            AutoMarke.Text = "";
-            AutoKlasse.Text = "";
-            AutoTagestarif.Text = "";
-            AutoBasistarif.Text = "";
-        }
+    }
+}
+
+
+//private void clearAutoForm()
+        //{
+        //    AutoMarke.Text = "";
+        //    AutoKlasse.Text = "";
+        //    AutoTagestarif.Text = "";
+        //    AutoBasistarif.Text = "";
+        //}
+
+
+/*
 
         // Kunden stuff
         private void KundeSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -109,6 +175,8 @@ namespace AutoReservation.UI
         }
 
     }
+
+        */
     /*
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -124,4 +192,3 @@ namespace AutoReservation.UI
     } */
 
 
-}

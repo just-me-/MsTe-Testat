@@ -35,6 +35,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- more implicit styles  (notiz für mich: kein key, dann gelten sie für alle targettypes) -->
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="30 0 20 0"></Setter>
         <Setter Property="Padding" Value="4"></Setter>

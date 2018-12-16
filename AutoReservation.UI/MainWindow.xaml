@@ -6,10 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:AutoReservation.UI"
-        xmlns:Views="clr-namespace:AutoReservation.UI.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         Background="#3D77FE">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,6 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid >
         <TabControl>
             <TabItem Header="Autos">
@@ -32,10 +33,10 @@
                                 Liste der Autos
                             </Label>
                             <DataGrid Grid.Row="1" 
-                              Name="listAutos" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
+                              Name="listAutos" AutoGenerateColumns="False"
                               SelectionMode="Single" IsReadOnly="True" 
                               ItemsSource="{Binding Autos}" 
-                              SelectedItem="{Binding SelectedAuto}"
+
                               MouseDoubleClick="AutoSelectedListBox_OnMouseDoubleClick">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="2*" Header="Marke" Binding="{Binding Marke}">
@@ -51,7 +52,7 @@
                             <Button FontSize="35" Click="AutoAddButton_OnClick">
                                 <fa:FontAwesome Icon="PlusCircle"/>
                             </Button>
-                            <Button FontSize="35">
+                            <Button FontSize="35" Click="AutoRemoveButton_OnClick">
                                 <fa:FontAwesome Icon="MinusCircle"></fa:FontAwesome>
                             </Button>
                         </StackPanel>
@@ -62,7 +63,7 @@
                         <Label Content="Marke: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Name="AutoMarke"></TextBox>
                         <Label Content="Autoklasse" Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="AutoKlasse"></TextBox>
+                        <TextBox Name="AutoklasseTextbox"></TextBox>
                         <Label Content="Tagestarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Name="AutoTagestarif"></TextBox>
                         <Label Content="Basistarif: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
@@ -89,9 +90,11 @@
                             <DataGrid Grid.Row="1" 
                               Name="listKunden" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                               SelectionMode="Single" IsReadOnly="True" 
-                              ItemsSource="{Binding Kunden}" 
-                              SelectedItem="{Binding SelectedKunde}"
-                              MouseDoubleClick="KundeSelectedListBox_OnMouseDoubleClick">
+                              ItemsSource="{Binding Kunden}" >
+
+                                <!--MouseDoubleClick="KundeSelectedListBox_OnMouseDoubleClick"-->
+
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Nachname" Binding="{Binding Nachname}" />
                                     <DataGridTextColumn Width="*" Header="Vorname" Binding="{Binding Vorname}" />
@@ -130,6 +133,10 @@
                 <DockPanel Dock="Left" Background="{StaticResource BackgroundColorMainWindow}">
                     <StackPanel Width="350">
                         <Grid Grid.ColumnSpan="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="53*"/>
+                                <ColumnDefinition Width="297*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="*" />
@@ -140,8 +147,8 @@
                             <DataGrid Grid.Row="1" 
                               Name="listReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                               SelectionMode="Single" IsReadOnly="True" 
-                              ItemsSource="{Binding Reservationen}" 
-                              SelectedItem="{Binding SelectedReservation}">
+                              ItemsSource="{Binding Reservation}" Grid.ColumnSpan="2" >
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Reservations Nr." Binding="{Binding ReservationsNr}" />
                                     <DataGridTextColumn Width="*" Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}}" />
@@ -160,11 +167,14 @@
                             <Button FontSize="35">
                                 <fa:FontAwesome Icon="MinusCircle"></fa:FontAwesome>
                             </Button>
+                            <Button FontSize="35">
+                                <fa:FontAwesome Icon="ClockOutline"></fa:FontAwesome>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel>
                         <Label Content="Details:" FontSize="15" Margin="15 0 0 0"></Label>
-                        
+
                         <Label Content="Reservations Nr.: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Name="Nr" IsReadOnly="True" />
                         <Label Content="Von-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
