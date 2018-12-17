@@ -220,6 +220,7 @@ namespace AutoReservation.UI
                 case Key.D9:
                 case Key.D0:
                 case Key.Back:
+                case Key.OemPeriod:
                     break;
 
                 default:
@@ -240,7 +241,16 @@ namespace AutoReservation.UI
             string vorname = KundeVorname.Text;
             string nachname = KundeNachname.Text;
             string gebdatText = KundeGeburtsdatum.Text;
-            DateTime gebdat = DateTime.Parse(gebdatText);
+            DateTime gebdat;
+            
+            bool success = DateTime.TryParse(gebdatText, out gebdat);
+            if (!success)
+            {
+                gebdat = new DateTime(1900,1,1);
+                MessageBox.Show("Fehler beim Lesen des Geburtsdatums. Es wurde auf einen Standardwert gesetzt", "Fehler",
+                    MessageBoxButton.OK);
+            }
+            
 
             return new KundeDto
             {
@@ -332,8 +342,26 @@ namespace AutoReservation.UI
 
             string vonDatText = ResVon.Text;
             string bisDatText = ResBis.Text;
-            DateTime vonDat = DateTime.Parse(vonDatText);
-            DateTime bisDat = DateTime.Parse(bisDatText);
+            DateTime vonDat;
+            DateTime bisDat;
+
+            bool success = DateTime.TryParse(vonDatText, out vonDat);
+
+            if (!success)
+            {
+                vonDat = new DateTime(2020, 1, 1);
+                MessageBox.Show("Fehler beim Lesen des Von Datums. Es wurde auf einen Standardwert gesetzt", "Fehler",
+                    MessageBoxButton.OK);
+            }
+
+            success = DateTime.TryParse(bisDatText, out bisDat);
+            if (!success)
+            {
+                bisDat = new DateTime(2020, 1, 2);
+                MessageBox.Show("Fehler beim Lesen des Bis Datums. Es wurde auf einen Standardwert gesetzt", "Fehler",
+                    MessageBoxButton.OK);
+            }
+
 
             KundeDto k = ResKunde.SelectionBoxItem as KundeDto;
             AutoDto a = ResAuto.SelectionBoxItem as AutoDto;
@@ -458,15 +486,13 @@ namespace AutoReservation.UI
             }
 
             /*
-
+            alter version:
             //totaler gurkencode again
             targetReservationToUpdate.Von = newReservation.Von;
             targetReservationToUpdate.Bis = newReservation.Bis;
             targetReservationToUpdate.Kunde = newReservation.Kunde;
             targetReservationToUpdate.Auto = newReservation.Auto;
-            Model.service.UpdateReservation(targetReservationToUpdate);
-            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+            Model.service.UpdateReservation(targetReservationToUpdate)
 
     */
 
