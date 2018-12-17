@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.DataTransferObjects.Faults;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Dal.Entities;
@@ -18,19 +19,19 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutosTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(4, Target.GetAllAutoDtos().Count);
         }
 
         [Fact]
         public void GetKundenTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(4, Target.GetAllKundenDtos().Count);
         }
 
         [Fact]
         public void GetReservationenTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(4, Target.GetAllReservationDtos().Count);
         }
 
         #endregion
@@ -40,13 +41,17 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutoByIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var auto = Target.GetAutoDtoById(1);
+            Assert.Equal(1, auto.Id);
+            Assert.Equal("Fiat Punto", auto.Marke);
+            Assert.Equal(AutoKlasse.Standard, auto.AutoKlasse);
         }
 
         [Fact]
         public void GetKundeByIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var kunde = Target.GetKundeDtoById(1);
+            Assert.Equal(1, kunde.Id);
         }
 
         [Fact]
@@ -196,6 +201,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateReservationWithAutoNotAvailableTest()
         {
+
             
         }
 
