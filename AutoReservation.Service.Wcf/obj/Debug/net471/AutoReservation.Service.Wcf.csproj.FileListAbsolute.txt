@@ -234,3 +234,4 @@ C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Service.Wcf\obj\D
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.csproj.CopyComplete
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.dll
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Service.Wcf\obj\Debug\net471\AutoReservation.Service.Wcf.pdb
+E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Service.Wcf\bin\Debug\net471\PropertyChanged.dll

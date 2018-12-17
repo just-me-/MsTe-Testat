@@ -346,7 +346,7 @@ namespace AutoReservation.UI
             ReservationDto reservationToAdd = loadFromReservationForm();
             try
             {
-                Model.service.InsertReservation(reservationToAdd); //TODO check exeption und messagebox when fail
+                Model.service.InsertReservation(reservationToAdd);
                 Model.Reservation.Add(reservationToAdd);
             }
             catch (FaultException<AutoUnavailableFault> ex)

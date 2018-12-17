@@ -241,3 +241,4 @@ C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Dal\obj\Debug\net
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.csproj.CopyComplete
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.dll
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.pdb
+E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Dal\obj\Debug\net471\AutoReservation.Dal.csprojAssemblyReference.cache

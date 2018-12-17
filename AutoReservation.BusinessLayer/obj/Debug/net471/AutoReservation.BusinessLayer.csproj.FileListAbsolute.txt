@@ -270,3 +270,4 @@ C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.csproj.CopyComplete
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.dll
 C:\Users\Marcel\Desktop\MGE\Testat\MsTe-Testat\AutoReservation.BusinessLayer\obj\Debug\net471\AutoReservation.BusinessLayer.pdb
+E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.BusinessLayer\bin\Debug\net471\PropertyChanged.dll
