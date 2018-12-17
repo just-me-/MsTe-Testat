@@ -129,7 +129,7 @@
                         <Label Content="Nachname: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Name="KundeNachname"></TextBox>
                         <Label Content="Geburtsdatum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="KundeGeburtsdatum"></TextBox>
+                        <TextBox Name="KundeGeburtsdatum" KeyDown="OnKeyDown"></TextBox>
 
                         <Button Margin="100 30 100 0" FontSize="30" Click="KundeSaveButton_OnClick">
                             <fa:FontAwesome Icon="Save"/>
@@ -197,9 +197,9 @@
                         <!--<Label Content="Reservations Nr.: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <TextBox Name="ResNr" IsReadOnly="True" />  ==> DTO hat keine Id-->
                         <Label Content="Von-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="ResVon"></TextBox>
+                        <TextBox Name="ResVon" KeyDown="OnKeyDown"></TextBox>
                         <Label Content="Bis-Datum: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
-                        <TextBox Name="ResBis"></TextBox>
+                        <TextBox Name="ResBis" KeyDown="OnKeyDown"></TextBox>
 
                         <Label Content="Kunde: " Margin="{StaticResource DetailViewLabelMargin}"></Label>
                         <ComboBox Name="ResKunde" Background="{StaticResource BackgroundColorMainWindow}" 
