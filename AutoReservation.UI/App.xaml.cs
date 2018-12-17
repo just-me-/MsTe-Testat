@@ -16,16 +16,13 @@ namespace AutoReservation.UI
     /// </summary>
     public partial class App : Application
     {
-        public MainViewModel MvModel { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            MvModel = new MainViewModel();
 
             MainWindow = new MainWindow();
-            MainWindow.DataContext = MvModel;
             MainWindow.Show();
         }
     }

@@ -60,19 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\AutoViewModel.cs" />
-    <Compile Include="ViewModel\KundeViewModel.cs" />
+    <Compile Include="Converter\BasistarifVisibilityConverter.cs" />
+    <Compile Include="Converter\AutoKlasseToStringConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ReservationViewModel.cs" />
-    <Compile Include="Views\AutoView.xaml.cs">
-      <DependentUpon>AutoView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\KundeView.xaml.cs">
-      <DependentUpon>KundeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReservationView.xaml.cs">
-      <DependentUpon>ReservationView.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,18 +76,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Outsourced.Ressources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AutoView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\KundeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReservationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
