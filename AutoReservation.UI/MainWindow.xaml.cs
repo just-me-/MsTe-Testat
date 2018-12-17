@@ -69,6 +69,7 @@ namespace AutoReservation.UI
         {
             string marke = AutoMarke.Text;
 
+            //Autoklasse, Standard by Default
             string klasseText = AutoklasseTextbox.Text;
 
             AutoKlasse klasse;
@@ -80,15 +81,41 @@ namespace AutoReservation.UI
                 case "Mittelklasse":
                     klasse = AutoKlasse.Mittelklasse;
                     break;
+                case "Standard":
+                    klasse = AutoKlasse.Standard;
+                    break;
                 default:
                     klasse = AutoKlasse.Standard;
+                    MessageBox.Show("Fehler beim Lesen der Autoklasse. Sie wurde auf einen Standardwert gesetzt", "Fehler",
+                        MessageBoxButton.OK);
                     break;
             }
 
+            //Tarife
+            //Hinweis: Die Tariffelder akzeptieren nur Zahlen, es sind deshalb keine TryParse-Fehlschläge zu erwarten.
+            bool success;
+            int tagestarif = 0, basistarif = 0;
 
-            int tagestarif = int.Parse(AutoTagestarif.Text);
-            int basistarif = int.Parse(AutoBasistarif.Text);
+            success = int.TryParse(AutoTagestarif.Text, out tagestarif);
+            if (!success)
+            {
+                tagestarif = 12;
+                MessageBox.Show("Fehler beim Lesen des Tagestarifs. Er wurde auf einen Standardwert gesetzt", "Fehler",
+                    MessageBoxButton.OK);
+            }
 
+
+
+            if (klasse == AutoKlasse.Luxusklasse)
+            {
+                success = int.TryParse(AutoBasistarif.Text, out basistarif);
+                if (!success)
+                {
+                    tagestarif = 0;
+                    MessageBox.Show("Fehler beim Lesen des Tagestarifs. Er wurde auf einen Standardwert gesetzt", "Fehler",
+                        MessageBoxButton.OK);
+                }
+            }
             return new AutoDto
             {
                 Marke = marke,
