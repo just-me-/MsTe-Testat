@@ -264,7 +264,7 @@ namespace AutoReservation.Service.Wcf.Testing
                 Von = new DateTime(2020, 1, 11),
                 Bis = new DateTime(2020, 1, 19)
             };
-            Assert.Throws<FaultException<InvalidDateRangeFault>>(() => Target.InsertReservation(res));
+            Assert.Throws<FaultException<AutoUnavailableFault>>(() => Target.InsertReservation(res));
         }
 
 
