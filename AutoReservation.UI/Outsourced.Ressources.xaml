@@ -1,8 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AutoReservation.UI"
-                    xmlns:dataTransferObjects="clr-namespace:AutoReservation.Common.DataTransferObjects;assembly=AutoReservation.Common">
+                    xmlns:dataTransferObjects="clr-namespace:AutoReservation.Common.DataTransferObjects;assembly=AutoReservation.Common"
+                    xmlns:converter="clr-namespace:AutoReservation.UI.Converter">
+
+
+
+
+    <!-- Converter -->
+    <converter:AutoKlasseToStringConverter x:Key="AutoKlasseToStringConverter" />
+
     
+    <converter:BasistarifVisibilityConverter x:Key="BasistarifVisibilityConverter" />
+
     <!-- main colors -->
     <SolidColorBrush x:Key="BackgroundColorMainWindow" Color="#3D77FE" />
     <SolidColorBrush x:Key="BackgroundLighterColorMainWindow" Color="#44BCEC" />

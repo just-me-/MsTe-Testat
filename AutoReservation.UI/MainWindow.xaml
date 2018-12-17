@@ -6,16 +6,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:AutoReservation.UI"
+        xmlns:converter="clr-namespace:AutoReservation.UI.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         Background="#3D77FE">
 
     <Window.Resources>
+
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Outsourced.Ressources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+
+        
+
     </Window.Resources>
 
     <Grid >
@@ -41,9 +47,12 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="2*" Header="Marke" Binding="{Binding Marke}">
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Width="*" Header="Klasse" Binding="{Binding AutoKlasse}" />
+                                    <DataGridTextColumn Width="*" Header="Klasse" Binding="{Binding AutoKlasse, Converter = {StaticResource AutoKlasseToStringConverter }}"/>
                                     <DataGridTextColumn Width="*" Header="Tagestarif" Binding="{Binding Tagestarif}" />
                                     <DataGridTextColumn Width="*" Header="Basistarif" Binding="{Binding Basistarif}" />
+                                                        <!-- not working)==!?? Visibility="{Binding AutoKlasse, Converter = {StaticResource BasistarifVisibilityConverter }}"--> 
+                                                        
+                                               
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

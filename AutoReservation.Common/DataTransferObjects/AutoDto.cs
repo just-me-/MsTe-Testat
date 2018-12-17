@@ -20,7 +20,7 @@ namespace AutoReservation.Common.DataTransferObjects
         [DataMember]
         public int Tagestarif { get; set; }
         [DataMember]
-        public AutoKlasse AutoKlasse;
+        public AutoKlasse AutoKlasse { get; set; }
 
         //public ICollection<ReservationDto> Reservationen { get; set; }
 
