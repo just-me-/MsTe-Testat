@@ -36,6 +36,8 @@ _ReSharper.*
 bin
 obj
 packages
+.dll
+.pdb
 
 *.dll
 *.pdb

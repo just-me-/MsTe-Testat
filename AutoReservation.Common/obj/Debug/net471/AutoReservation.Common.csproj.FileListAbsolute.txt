@@ -241,3 +241,4 @@ E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\ne
 E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csproj.CopyComplete
 E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.dll
 E:\Dokumente\VisualStudio\Testat\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.pdb
+C:\Users\marco\Documents\HSR\Semester3\DotNet\02_Uebungen\99_Miniprojekt\Solution\MsTe-Testat\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csprojAssemblyReference.cache
