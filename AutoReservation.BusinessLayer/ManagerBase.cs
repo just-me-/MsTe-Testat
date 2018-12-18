@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ServiceModel;
 using AutoReservation.BusinessLayer.Exceptions;
+using AutoReservation.Common.FaultExceptions;
 using AutoReservation.Dal;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,20 +9,6 @@ namespace AutoReservation.BusinessLayer
 {
     public abstract class ManagerBase
     {
-        protected static OptimisticConcurrencyException<T> CreateOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
-            where T : class
-        {
-            var first = context.Entry(entity);
-            var second = first.GetDatabaseValues();
-            var third = second.ToObject();
-            T dbEntity =  (T)third;
-            //T dbEntity = (T)context.Entry(entity)
-            //    .GetDatabaseValues()
-            //    .ToObject();
-
-            //MARCEL : Fault Exception Päkli sicher nötig hier (siehe WCF --> Service) (Die Exception itselfs ollte im  Common Projekt sein da gemeinsam genutzt)
-            return new OptimisticConcurrencyException<T>($"Update {typeof(T).Name}: Concurrency-Fehler", dbEntity);
-        }
 
         protected static T UsingContext<T>(Func<AutoReservationContext, T> func)
         {
@@ -47,7 +35,12 @@ namespace AutoReservation.BusinessLayer
             }
             catch (DbUpdateConcurrencyException)
             {
-                throw CreateOptimisticConcurrencyException(context, entity);
+                OptimisticConcurrencyFault ex = new OptimisticConcurrencyFault
+                {
+                    Message = "Concurrency Fehler"
+                };
+
+                throw new FaultException<OptimisticConcurrencyFault>(ex);
             }
         }
         

@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using AutoReservation.Common.FaultExceptions;
 
 namespace AutoReservation.UI
 {
@@ -163,6 +164,10 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler",  MessageBoxButton.OK);
             }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
             
         }
 
@@ -184,6 +189,10 @@ namespace AutoReservation.UI
             catch (FieldAccessException ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -217,6 +226,10 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
 
         }
     
@@ -233,6 +246,7 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
+
         }
 
 
@@ -332,6 +346,10 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
         }
 
 
@@ -351,6 +369,10 @@ namespace AutoReservation.UI
             catch (FieldAccessException ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -383,6 +405,10 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
 
         }
 
@@ -398,6 +424,7 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
+
         }
 
 
@@ -499,6 +526,10 @@ namespace AutoReservation.UI
                     MessageBoxButton.OK);
 
             }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
             catch (Exception ex)
             {
                 string msg = ex.Message;
@@ -526,6 +557,10 @@ namespace AutoReservation.UI
             catch (FieldAccessException ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -568,6 +603,11 @@ namespace AutoReservation.UI
                     MessageBoxButton.OK);
 
             }
+
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
             catch (Exception ex)
             {
                 string msg = ex.Message;
@@ -600,6 +640,10 @@ namespace AutoReservation.UI
             catch (FieldAccessException ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using AutoReservation.Common.FaultExceptions;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -16,12 +17,15 @@ namespace AutoReservation.Common.Interfaces
         AutoDto GetAutoDtoById(int Id);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void InsertAuto(AutoDto autoDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void UpdateAuto(AutoDto autoDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void DeleteAuto(AutoDto autoDto);
 
         // Kunde
@@ -32,12 +36,15 @@ namespace AutoReservation.Common.Interfaces
         KundeDto GetKundeDtoById(int Id);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void InsertKunde(KundeDto kundeDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void UpdateKunde(KundeDto kundeDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void DeleteKunde(KundeDto kundeDto);
 
         // Reservation
@@ -50,14 +57,17 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(InvalidDateRangeFault))]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void InsertReservation(ReservationDto reservationDto);
 
         [OperationContract]
         [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(InvalidDateRangeFault))]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void UpdateReservation(ReservationDto reservationDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void DeleteReservation(ReservationDto reservationDto);
     }
 }

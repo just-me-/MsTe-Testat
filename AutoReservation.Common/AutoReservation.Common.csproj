@@ -15,4 +15,7 @@
      </PackageReference>
      <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
    </ItemGroup>
+   <ItemGroup>
+     <Folder Include="FaultExceptions\" />
+   </ItemGroup>
 </Project>

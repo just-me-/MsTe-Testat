@@ -26,12 +26,12 @@ namespace AutoReservation.Service.Wcf
             }
             catch (LocalOptimisticConcurrencyException<TEntity> e)
             {
-                var fault = new OptimisticConcurrencyFaultContract()
+                var fault = new OptimisticConcurrencyFault()
                 {
-                    Operation = operation,
+                    
                     Message = e.Message
                 };
-                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+                throw new FaultException<OptimisticConcurrencyFault>(fault);
             }
         }
 
