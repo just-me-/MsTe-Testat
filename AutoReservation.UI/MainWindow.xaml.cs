@@ -138,7 +138,12 @@ namespace AutoReservation.UI
         //Checks which car is selected and returns the proper DTO
         private AutoDto GetSelectedAuto()
         {
+
             int index = listAutos.SelectedIndex;
+            if (index < 0)
+            {
+                throw new FieldAccessException("Es ist kein Eintrag selektiert");
+            }
             return Model.Autos.ElementAt(index); //Die index von selected und Autos ist gleich weil sie gebindet sind.
 
         }
@@ -165,13 +170,20 @@ namespace AutoReservation.UI
         //Auto removen:
         private void AutoRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
 
-                AutoDto targetAutoToDelete = GetSelectedAuto();
-                Model.service.DeleteAuto(targetAutoToDelete);
-                Model.Autos.Remove(targetAutoToDelete);
+                    AutoDto targetAutoToDelete = GetSelectedAuto();
+                    Model.service.DeleteAuto(targetAutoToDelete);
+                    Model.Autos.Remove(targetAutoToDelete);
+                }
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -200,17 +212,27 @@ namespace AutoReservation.UI
             catch (FormatException ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
-
             }
-            
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+
         }
     
 
 
         private void AutoSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            AutoDto selectedCar = GetSelectedAuto();
-            loadIntoAutoForm(selectedCar);
+            try
+            {
+                AutoDto selectedCar = GetSelectedAuto();
+                loadIntoAutoForm(selectedCar);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
         }
 
 
@@ -287,6 +309,10 @@ namespace AutoReservation.UI
         private KundeDto GetSelectedKunde()
         {
             int index = listKunden.SelectedIndex;
+            if (index < 0)
+            {
+                throw new FieldAccessException("Es ist kein Eintrag selektiert");
+            }
             return Model.Kunden.ElementAt(index); //Die index von selected und Kunden ist gleich weil sie gebindet sind.
 
         }
@@ -312,12 +338,19 @@ namespace AutoReservation.UI
         //Kunde removen:
         private void KundeRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
-                KundeDto targetKundeToDelete = GetSelectedKunde();
-                Model.service.DeleteKunde(targetKundeToDelete);
-                Model.Kunden.Remove(targetKundeToDelete);
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    KundeDto targetKundeToDelete = GetSelectedKunde();
+                    Model.service.DeleteKunde(targetKundeToDelete);
+                    Model.Kunden.Remove(targetKundeToDelete);
+                }
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -346,15 +379,25 @@ namespace AutoReservation.UI
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
-
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
 
         }
 
 
         private void KundeSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            KundeDto selectedKunde = GetSelectedKunde();
-            loadIntoKundeForm(selectedKunde);
+            try
+            {
+                KundeDto selectedKunde = GetSelectedKunde();
+                loadIntoKundeForm(selectedKunde);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
         }
 
 
@@ -416,6 +459,10 @@ namespace AutoReservation.UI
         private ReservationDto GetSelectedReservation()
         {
             int index = listReservationen.SelectedIndex;
+            if (index < 0)
+            {
+                throw new FieldAccessException("Es ist kein Eintrag selektiert");
+            }
             return Model.Reservation.ElementAt(index); //Die index von selected und Kunden ist gleich weil sie gebindet sind.
 
         }
@@ -466,12 +513,19 @@ namespace AutoReservation.UI
         // removen:
         private void ReservationRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
-                ReservationDto targetResToDelete = GetSelectedReservation();
-                Model.service.DeleteReservation(targetResToDelete);
-                Model.Reservation.Remove(targetResToDelete);
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    ReservationDto targetResToDelete = GetSelectedReservation();
+                    Model.service.DeleteReservation(targetResToDelete);
+                    Model.Reservation.Remove(targetResToDelete);
+                }
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -491,6 +545,10 @@ namespace AutoReservation.UI
                 Model.Reservation.Add(newReservation);
             }
             catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FieldAccessException ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
@@ -534,8 +592,15 @@ namespace AutoReservation.UI
 
         private void ReservationSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ReservationDto selectedRes = GetSelectedReservation();
-            loadIntoReservationForm(selectedRes);
+            try
+            {
+                ReservationDto selectedRes = GetSelectedReservation();
+                loadIntoReservationForm(selectedRes);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
         }
 
 
