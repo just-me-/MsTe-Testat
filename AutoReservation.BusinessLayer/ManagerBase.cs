@@ -10,10 +10,15 @@ namespace AutoReservation.BusinessLayer
         protected static OptimisticConcurrencyException<T> CreateOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
             where T : class
         {
-            T dbEntity = (T)context.Entry(entity)
-                .GetDatabaseValues()
-                .ToObject();
+            var first = context.Entry(entity);
+            var second = first.GetDatabaseValues();
+            var third = second.ToObject();
+            T dbEntity =  (T)third;
+            //T dbEntity = (T)context.Entry(entity)
+            //    .GetDatabaseValues()
+            //    .ToObject();
 
+            //MARCEL : Fault Exception Päkli sicher nötig hier (siehe WCF --> Service) (Die Exception itselfs ollte im  Common Projekt sein da gemeinsam genutzt)
             return new OptimisticConcurrencyException<T>($"Update {typeof(T).Name}: Concurrency-Fehler", dbEntity);
         }
 
