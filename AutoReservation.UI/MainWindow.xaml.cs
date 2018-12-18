@@ -579,7 +579,9 @@ namespace AutoReservation.UI
                 targetReservationToUpdate.Bis = newReservation.Bis;
                 targetReservationToUpdate.Kunde = newReservation.Kunde;
                 targetReservationToUpdate.Auto = newReservation.Auto;
+
                 Model.service.UpdateReservation(targetReservationToUpdate);
+
                 Model.Reservation.Remove(targetReservationToUpdate);
                 Model.Reservation.Add(newReservation);
 

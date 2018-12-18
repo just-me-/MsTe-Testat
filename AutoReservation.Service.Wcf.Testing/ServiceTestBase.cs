@@ -3,6 +3,7 @@ using System.ServiceModel;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using AutoReservation.Common.FaultExceptions;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
@@ -207,7 +208,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateAuto(mod1);
 
             mod2.Marke = "SecondCar";
-            Assert.Throws<FaultException<ExceptionDetail>>(() => Target.UpdateAuto(mod2));
+            Assert.Throws<FaultException<OptimisticConcurrencyFault>>(() => Target.UpdateAuto(mod2));
         }
 
         [Fact]
@@ -220,7 +221,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateKunde(mod1);
 
             mod2.Vorname = "SecondKunde";
-            Assert.Throws<OptimisticConcurrencyException<Kunde>>(() => Target.UpdateKunde(mod2));
+            Assert.Throws<FaultException<OptimisticConcurrencyFault>>(() => Target.UpdateKunde(mod2));
         }
 
         [Fact]
@@ -233,7 +234,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateReservation(mod1);
 
             mod2.Bis = new DateTime(2020,2, 2);
-            Assert.Throws<FaultException<ExceptionDetail>>(() => Target.UpdateReservation(mod2));
+            Assert.Throws<FaultException<OptimisticConcurrencyFault>>(() => Target.UpdateReservation(mod2));
         }
 
         #endregion
