@@ -49,6 +49,7 @@
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Width="*" Header="Klasse" Binding="{Binding AutoKlasse, Converter = {StaticResource AutoKlasseToStringConverter }}"/>
                                     <DataGridTextColumn Width="*" Header="Tagestarif" Binding="{Binding Tagestarif}" />
+                                    <!--<DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}" />-->
                                     <DataGridTextColumn Width="*" Header="Basistarif" Binding="{Binding Basistarif}" />
                                                         <!-- not working)==!?? Visibility="{Binding AutoKlasse, Converter = {StaticResource BasistarifVisibilityConverter }}"--> 
                                                         

@@ -91,10 +91,10 @@ namespace AutoReservation.Service.Wcf
            return ReservationManager.GetReservationById(Id).ConvertToDto();
         }
 
-        public void InsertAuto(AutoDto autoDto)
+        public AutoDto InsertAuto(AutoDto autoDto)
         {
             WriteActualMethod();
-            AutoManager.InsertAuto(autoDto.ConvertToEntity());
+            return AutoManager.InsertAuto(autoDto.ConvertToEntity()).ConvertToDto();    //hier convert to dto und nicht void. //***!!!*///
         }
 
         public void InsertKunde(KundeDto kundeDto)

@@ -18,7 +18,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
-        void InsertAuto(AutoDto autoDto);
+        AutoDto InsertAuto(AutoDto autoDto);
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]

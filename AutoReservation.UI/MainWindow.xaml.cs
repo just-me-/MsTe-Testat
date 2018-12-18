@@ -157,8 +157,16 @@ namespace AutoReservation.UI
             try
             {
                 AutoDto autoToAdd = loadFromAutoForm();
-                Model.service.InsertAuto(autoToAdd);
+                AutoDto addedAuto = Model.service.InsertAuto(autoToAdd); //hier müsste auto zurückgegeben werden
+                //update Data
                 Model.Autos.Add(autoToAdd);
+                //OLD:
+                //listAutos.DataContext = null;
+                //listAutos.DataContext = Model.Autos;
+
+                //DEBUG:
+                //Model.showMyData();
+                
             }
             catch (FormatException ex)
             {
@@ -213,10 +221,10 @@ namespace AutoReservation.UI
                 targetAutoToUpdate.Basistarif = newAuto.Basistarif;
                 targetAutoToUpdate.Tagestarif = newAuto.Tagestarif;
                 Model.service.UpdateAuto(targetAutoToUpdate);
-                //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
+                //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas --> Done
                 //Mache es hier the simple way. Wie gesagt, sehr gurkig.
-                Model.Autos.Remove(targetAutoToUpdate);
-                Model.Autos.Add(newAuto);
+                //Model.Autos.Remove(targetAutoToUpdate);
+                //Model.Autos.Add(newAuto);
             }
             catch (FormatException ex)
             {
@@ -392,9 +400,9 @@ namespace AutoReservation.UI
                 Model.service.UpdateKunde(targetKundeToUpdate);
 
                 //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-                //Mache es hier the simple way. Wie gesagt, sehr gurkig.
-                Model.Kunden.Remove(targetKundeToUpdate);
-                Model.Kunden.Add(newKunde);
+                //Mache es hier the simple way. Wie gesagt, sehr gurkig. --> Done
+                //Model.Kunden.Remove(targetKundeToUpdate);
+                //Model.Kunden.Add(newKunde);
 
             }
             catch (FormatException ex)
@@ -582,8 +590,8 @@ namespace AutoReservation.UI
 
                 Model.service.UpdateReservation(targetReservationToUpdate);
 
-                Model.Reservation.Remove(targetReservationToUpdate);
-                Model.Reservation.Add(newReservation);
+                //Model.Reservation.Remove(targetReservationToUpdate);
+                //Model.Reservation.Add(newReservation);
 
                 //Alte Version
                 //Model.service.DeleteReservation(targetReservationToUpdate);
