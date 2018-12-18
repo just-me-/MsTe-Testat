@@ -132,9 +132,6 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
 
-            //checkForDateRangeException(reservationDto);
-            //checkForAvailabilityException(reservationDto);
-
             handlingOptimisticConcurrencyException<ReservationDto>("UpdateReservation",
                 () => ReservationManager.UpdateReservation(reservationDto.ConvertToEntity()));
         }

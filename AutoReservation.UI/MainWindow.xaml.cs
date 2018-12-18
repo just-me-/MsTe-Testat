@@ -162,13 +162,13 @@ namespace AutoReservation.UI
             }
             catch (FormatException ex)
             {
-                MessageBox.Show(ex.Message, "Fehler",  MessageBoxButton.OK);
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
             catch (FaultException<OptimisticConcurrencyFault> ex)
             {
                 MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
-            
+
         }
 
 
@@ -232,7 +232,7 @@ namespace AutoReservation.UI
             }
 
         }
-    
+
 
 
         private void AutoSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -294,13 +294,13 @@ namespace AutoReservation.UI
             string nachname = KundeNachname.Text;
             string gebdatText = KundeGeburtsdatum.Text;
             DateTime gebdat;
-            
+
             bool success = DateTime.TryParse(gebdatText, out gebdat);
             if (!success)
             {
                 throw new FormatException("Konnte das Geburtsdatum nicht lesen");
             }
-            
+
 
             return new KundeDto
             {
@@ -499,7 +499,7 @@ namespace AutoReservation.UI
         // adden:
         private void ReservationAddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+
             try
             {
                 ReservationDto reservationToAdd = loadFromReservationForm();
@@ -574,10 +574,19 @@ namespace AutoReservation.UI
             {
                 ReservationDto targetReservationToUpdate = GetSelectedReservation();
                 ReservationDto newReservation = loadFromReservationForm();
-                Model.service.DeleteReservation(targetReservationToUpdate);
-                Model.service.InsertReservation(newReservation);
+
+                targetReservationToUpdate.Von = newReservation.Von;
+                targetReservationToUpdate.Bis = newReservation.Bis;
+                targetReservationToUpdate.Kunde = newReservation.Kunde;
+                targetReservationToUpdate.Auto = newReservation.Auto;
+                Model.service.UpdateReservation(targetReservationToUpdate);
                 Model.Reservation.Remove(targetReservationToUpdate);
                 Model.Reservation.Add(newReservation);
+
+                //Alte Version
+                //Model.service.DeleteReservation(targetReservationToUpdate);
+                //Model.service.InsertReservation(newReservation);
+
             }
             catch (FormatException ex)
             {
@@ -616,15 +625,7 @@ namespace AutoReservation.UI
                     MessageBoxButton.OK);
             }
 
-            /*
-            alter version mit update: For Reference. Please ignore.
-            //totaler gurkencode again
-            targetReservationToUpdate.Von = newReservation.Von;
-            targetReservationToUpdate.Bis = newReservation.Bis;
-            targetReservationToUpdate.Kunde = newReservation.Kunde;
-            targetReservationToUpdate.Auto = newReservation.Auto;
-            Model.service.UpdateReservation(targetReservationToUpdate)
-             */
+
 
 
         }
