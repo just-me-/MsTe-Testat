@@ -157,11 +157,10 @@ namespace AutoReservation.UI
             try
             {
 
-                //ADDAuto returned das geaddedte Auto. Hilft aber nicht für die Concurrency Exception.
-                //Lasse es aber mal so ;)
+
                 AutoDto autoToAdd = loadFromAutoForm();
-                AutoDto addedAuto = Model.service.InsertAuto(autoToAdd); //hier müsste auto zurückgegeben werden
-                //update Data
+                AutoDto addedAuto = Model.service.InsertAuto(autoToAdd); 
+   
                 Model.Autos.Add(addedAuto);
                 //OLD:
                 //listAutos.DataContext = null;
@@ -223,11 +222,11 @@ namespace AutoReservation.UI
                 targetAutoToUpdate.Marke = newAuto.Marke;
                 targetAutoToUpdate.Basistarif = newAuto.Basistarif;
                 targetAutoToUpdate.Tagestarif = newAuto.Tagestarif;
-                Model.service.UpdateAuto(targetAutoToUpdate);
+                AutoDto updatedAuto = Model.service.UpdateAuto(targetAutoToUpdate);
                 //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas --> Done
                 //Mache es hier the simple way. Wie gesagt, sehr gurkig.
-                //Model.Autos.Remove(targetAutoToUpdate);
-                //Model.Autos.Add(newAuto);
+                Model.Autos.Remove(targetAutoToUpdate);
+                Model.Autos.Add(updatedAuto);
             }
             catch (FormatException ex)
             {
@@ -350,8 +349,8 @@ namespace AutoReservation.UI
             try
             {
                 KundeDto kundeToAdd = loadFromKundeForm();
-                Model.service.InsertKunde(kundeToAdd);
-                Model.Kunden.Add(kundeToAdd);
+                KundeDto addedKunde = Model.service.InsertKunde(kundeToAdd);
+                Model.Kunden.Add(addedKunde);
             }
             catch (FormatException ex)
             {
@@ -394,18 +393,18 @@ namespace AutoReservation.UI
             try
             {
                 KundeDto targetKundeToUpdate = GetSelectedKunde();
-                KundeDto newKunde = loadFromKundeForm();
+                KundeDto newPseudoKunde = loadFromKundeForm();
 
                 //totaler gurkencode again
-                targetKundeToUpdate.Nachname = newKunde.Nachname;
-                targetKundeToUpdate.Vorname = newKunde.Vorname;
-                targetKundeToUpdate.Geburtsdatum = newKunde.Geburtsdatum;
-                Model.service.UpdateKunde(targetKundeToUpdate);
+                targetKundeToUpdate.Nachname = newPseudoKunde.Nachname;
+                targetKundeToUpdate.Vorname = newPseudoKunde.Vorname;
+                targetKundeToUpdate.Geburtsdatum = newPseudoKunde.Geburtsdatum;
+                KundeDto updatedKunde = Model.service.UpdateKunde(targetKundeToUpdate);
 
                 //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-                //Mache es hier the simple way. Wie gesagt, sehr gurkig. --> Done
-                //Model.Kunden.Remove(targetKundeToUpdate);
-                //Model.Kunden.Add(newKunde);
+                //Mache es hier the simple way. Wie gesagt, sehr gurkig.Aber nur so erfährt das UI vom Timestamp Change.
+                Model.Kunden.Remove(targetKundeToUpdate);
+                Model.Kunden.Add(updatedKunde);
 
             }
             catch (FormatException ex)
@@ -513,9 +512,10 @@ namespace AutoReservation.UI
 
             try
             {
+               
                 ReservationDto reservationToAdd = loadFromReservationForm();
-                Model.service.InsertReservation(reservationToAdd);
-                Model.Reservation.Add(reservationToAdd);
+                ReservationDto addedReservation = Model.service.InsertReservation(reservationToAdd);
+                Model.Reservation.Add(addedReservation);
             }
             catch (FormatException ex)
             {
@@ -591,14 +591,14 @@ namespace AutoReservation.UI
                 targetReservationToUpdate.Kunde = newReservation.Kunde;
                 targetReservationToUpdate.Auto = newReservation.Auto;
 
-                Model.service.UpdateReservation(targetReservationToUpdate);
+                ReservationDto updatedReservation = Model.service.UpdateReservation(targetReservationToUpdate);
 
                 //Model.Reservation.Remove(targetReservationToUpdate);
                 //Model.Reservation.Add(newReservation);
 
                 //Alte Version
-                //Model.service.DeleteReservation(targetReservationToUpdate);
-                //Model.service.InsertReservation(newReservation);
+                Model.service.DeleteReservation(targetReservationToUpdate);
+                Model.service.InsertReservation(updatedReservation);
 
             }
             catch (FormatException ex)

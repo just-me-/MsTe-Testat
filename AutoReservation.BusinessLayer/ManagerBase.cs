@@ -29,6 +29,8 @@ namespace AutoReservation.BusinessLayer
         }
         protected static void SaveChanges<T>(AutoReservationContext context, T entity) where T : class
         {
+
+
             try
             {
                 context.SaveChanges();
@@ -37,7 +39,7 @@ namespace AutoReservation.BusinessLayer
             {
                 OptimisticConcurrencyFault ex = new OptimisticConcurrencyFault
                 {
-                    Message = "Concurrency Fehler"
+                    Message = "Unbekannter Concurrency Fehler"
                 };
 
                 throw new FaultException<OptimisticConcurrencyFault>(ex);

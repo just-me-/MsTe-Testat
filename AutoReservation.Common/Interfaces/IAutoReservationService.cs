@@ -22,7 +22,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
-        void UpdateAuto(AutoDto autoDto);
+        AutoDto UpdateAuto(AutoDto autoDto);
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
@@ -37,11 +37,11 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
-        void InsertKunde(KundeDto kundeDto);
+        KundeDto InsertKunde(KundeDto kundeDto);
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
-        void UpdateKunde(KundeDto kundeDto);
+        KundeDto UpdateKunde(KundeDto kundeDto);
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
@@ -58,13 +58,13 @@ namespace AutoReservation.Common.Interfaces
         [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(InvalidDateRangeFault))]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
-        void InsertReservation(ReservationDto reservationDto);
+        ReservationDto InsertReservation(ReservationDto reservationDto);
 
         [OperationContract]
         [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(InvalidDateRangeFault))]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
-        void UpdateReservation(ReservationDto reservationDto);
+        ReservationDto UpdateReservation(ReservationDto reservationDto);
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
