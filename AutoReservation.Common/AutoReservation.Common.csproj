@@ -4,6 +4,11 @@
     <TargetFramework>net471</TargetFramework>
   </PropertyGroup>
    <ItemGroup>
+     <Compile Remove="FaultExceptions\**" />
+     <EmbeddedResource Remove="FaultExceptions\**" />
+     <None Remove="FaultExceptions\**" />
+   </ItemGroup>
+   <ItemGroup>
      <Reference Include="System.ServiceModel" />
    </ItemGroup>
    <ItemGroup>
@@ -14,8 +19,5 @@
        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
      </PackageReference>
      <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
-   </ItemGroup>
-   <ItemGroup>
-     <Folder Include="FaultExceptions\" />
    </ItemGroup>
 </Project>
