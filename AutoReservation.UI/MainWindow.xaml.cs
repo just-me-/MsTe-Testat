@@ -156,17 +156,20 @@ namespace AutoReservation.UI
         {
             try
             {
+
+                //ADDAuto returned das geaddedte Auto. Hilft aber nicht für die Concurrency Exception.
+                //Lasse es aber mal so ;)
                 AutoDto autoToAdd = loadFromAutoForm();
                 AutoDto addedAuto = Model.service.InsertAuto(autoToAdd); //hier müsste auto zurückgegeben werden
                 //update Data
-                Model.Autos.Add(autoToAdd);
+                Model.Autos.Add(addedAuto);
                 //OLD:
                 //listAutos.DataContext = null;
                 //listAutos.DataContext = Model.Autos;
 
                 //DEBUG:
                 //Model.showMyData();
-                
+
             }
             catch (FormatException ex)
             {
