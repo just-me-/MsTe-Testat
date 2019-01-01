@@ -6,6 +6,7 @@ namespace AutoReservation.Common.DataTransferObjects
 {
 
     [DataContract]
+    [AddINotifyPropertyChangedInterface]
     public class ReservationDto
     {
         [DataMember]

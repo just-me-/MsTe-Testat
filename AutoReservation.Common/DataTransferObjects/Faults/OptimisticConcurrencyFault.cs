@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 namespace AutoReservation.Common.FaultExceptions
 {
     [DataContract]
-    public class OptimisticConcurrencyFaultContract
+    public class OptimisticConcurrencyFault
     {
-        [DataMember]
-        public string Operation { get; set; }
+
         [DataMember]
         public string Message { get; set; }
     }

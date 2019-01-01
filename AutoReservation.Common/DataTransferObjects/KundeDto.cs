@@ -5,6 +5,7 @@ using PropertyChanged;
 namespace AutoReservation.Common.DataTransferObjects
 {
     [DataContract]
+    [AddINotifyPropertyChangedInterface]
     public class KundeDto
     {
         [DataMember]

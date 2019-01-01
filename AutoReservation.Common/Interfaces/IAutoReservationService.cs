@@ -1,5 +1,6 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using AutoReservation.Common.FaultExceptions;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -16,12 +17,15 @@ namespace AutoReservation.Common.Interfaces
         AutoDto GetAutoDtoById(int Id);
 
         [OperationContract]
-        void InsertAuto(AutoDto autoDto);
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        AutoDto InsertAuto(AutoDto autoDto);
 
         [OperationContract]
-        void UpdateAuto(AutoDto autoDto);
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        AutoDto UpdateAuto(AutoDto autoDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void DeleteAuto(AutoDto autoDto);
 
         // Kunde
@@ -32,12 +36,15 @@ namespace AutoReservation.Common.Interfaces
         KundeDto GetKundeDtoById(int Id);
 
         [OperationContract]
-        void InsertKunde(KundeDto kundeDto);
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        KundeDto InsertKunde(KundeDto kundeDto);
 
         [OperationContract]
-        void UpdateKunde(KundeDto kundeDto);
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        KundeDto UpdateKunde(KundeDto kundeDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void DeleteKunde(KundeDto kundeDto);
 
         // Reservation
@@ -50,14 +57,17 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(InvalidDateRangeFault))]
-        void InsertReservation(ReservationDto reservationDto);
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        ReservationDto InsertReservation(ReservationDto reservationDto);
 
         [OperationContract]
         [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(InvalidDateRangeFault))]
-        void UpdateReservation(ReservationDto reservationDto);
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        ReservationDto UpdateReservation(ReservationDto reservationDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void DeleteReservation(ReservationDto reservationDto);
     }
 }

@@ -18,20 +18,20 @@ namespace AutoReservation.Service.Wcf
         private static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
 
-        private static void handlingOptimisticConcurrencyException<TEntity>(string operation, Action func)
+        private static TEntity handlingOptimisticConcurrencyException<TEntity>(string operation, Func<TEntity> func)
         {
             try
             {
-                func();
+                return func();
             }
             catch (LocalOptimisticConcurrencyException<TEntity> e)
             {
-                var fault = new OptimisticConcurrencyFaultContract()
+                var fault = new OptimisticConcurrencyFault()
                 {
-                    Operation = operation,
-                    Message = e.Message
+
+                    Message = "Concurrency error during " + operation
                 };
-                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+                throw new FaultException<OptimisticConcurrencyFault>(fault);
             }
         }
 
@@ -91,52 +91,49 @@ namespace AutoReservation.Service.Wcf
            return ReservationManager.GetReservationById(Id).ConvertToDto();
         }
 
-        public void InsertAuto(AutoDto autoDto)
+        public AutoDto InsertAuto(AutoDto autoDto)
         {
             WriteActualMethod();
-            AutoManager.InsertAuto(autoDto.ConvertToEntity());
+
+            return AutoManager.InsertAuto(autoDto.ConvertToEntity()).ConvertToDto();  
         }
 
-        public void InsertKunde(KundeDto kundeDto)
+        public KundeDto InsertKunde(KundeDto kundeDto)
         {
             WriteActualMethod();
-            KundeManager.InsertKunde(kundeDto.ConvertToEntity());
+            return KundeManager.InsertKunde(kundeDto.ConvertToEntity()).ConvertToDto(); ;
         }
 
-        public void InsertReservation(ReservationDto reservationDto)
+        public ReservationDto InsertReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
 
-        
-            //checkForDateRangeException(reservationDto);
-            //checkForAvailabilityException(reservationDto);
-
-            ReservationManager.InsertReservation(reservationDto.ConvertToEntity());
+            return ReservationManager.InsertReservation(reservationDto.ConvertToEntity()).ConvertToDto();
         }
 
-        public void UpdateAuto(AutoDto autoDto)
+        public AutoDto UpdateAuto(AutoDto autoDto)
         {
             WriteActualMethod();
-            handlingOptimisticConcurrencyException<AutoDto>("UpdateAuto",
-                () => AutoManager.UpdateAuto(autoDto.ConvertToEntity()));
+            return handlingOptimisticConcurrencyException<AutoDto>("UpdateAuto",
+                () => AutoManager.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto()
+                );
         }
 
-        public void UpdateKunde(KundeDto kundeDto)
+        public KundeDto UpdateKunde(KundeDto kundeDto)
         {
             WriteActualMethod();
-            handlingOptimisticConcurrencyException<KundeDto>("UpdateKunde",
-                () => KundeManager.UpdateKunde(kundeDto.ConvertToEntity()));
+            return handlingOptimisticConcurrencyException<KundeDto>("UpdateKunde",
+                () => KundeManager.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto()
+                );
         }
 
-        public void UpdateReservation(ReservationDto reservationDto)
+        public ReservationDto UpdateReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
 
-            //checkForDateRangeException(reservationDto);
-            //checkForAvailabilityException(reservationDto);
-
-            handlingOptimisticConcurrencyException<ReservationDto>("UpdateReservation",
-                () => ReservationManager.UpdateReservation(reservationDto.ConvertToEntity()));
+            return handlingOptimisticConcurrencyException<ReservationDto>("UpdateReservation",
+                () => ReservationManager.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto()
+                );
         }
     }
 }

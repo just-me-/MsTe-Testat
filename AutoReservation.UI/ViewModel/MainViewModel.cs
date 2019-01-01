@@ -45,6 +45,13 @@ namespace AutoReservation.UI
 
         }
 
+        public void updateData()
+        {
+            Reservation = new ObservableCollection<ReservationDto>(service.GetAllReservationDtos());
+            Kunden = new ObservableCollection<KundeDto>(service.GetAllKundenDtos());
+            Autos = new ObservableCollection<AutoDto>(service.GetAllAutoDtos());
+        }
+
         private void needSomeDummyData()
         {
             AutoDto auto = new AutoDto();
@@ -59,7 +66,7 @@ namespace AutoReservation.UI
         }
 
 
-        private void showMyData()
+        public void showMyData()
         {
             Console.WriteLine("====================Dump data===================");
             service.GetAllKundenDtos().ForEach((dto) =>

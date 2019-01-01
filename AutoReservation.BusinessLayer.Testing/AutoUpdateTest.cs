@@ -26,7 +26,7 @@ namespace AutoReservation.BusinessLayer.Testing
             Assert.Equal(20, sameCar.Tagestarif);
         }
 
-
+        [Fact]
         public void InsertAndDeleteAutoTest()
         {
             Auto someCar = new LuxusklasseAuto

@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using AutoReservation.Common.FaultExceptions;
 
 namespace AutoReservation.UI
 {
@@ -47,7 +48,7 @@ namespace AutoReservation.UI
             DispatcherTimer Timer = new DispatcherTimer();
 
             // Send tick event each second:
-            Timer.Interval = TimeSpan.FromSeconds(60);
+            Timer.Interval = TimeSpan.FromSeconds(600);
             Timer.Tick += (sender, args) =>
             {
                 //Update View
@@ -99,9 +100,8 @@ namespace AutoReservation.UI
             success = int.TryParse(AutoTagestarif.Text, out tagestarif);
             if (!success)
             {
-                tagestarif = 12;
-                MessageBox.Show("Fehler beim Lesen des Tagestarifs. Er wurde auf einen Standardwert gesetzt", "Fehler",
-                    MessageBoxButton.OK);
+                throw new FormatException("Fehler beim lesen des Tagestarifs");
+
             }
 
 
@@ -111,9 +111,7 @@ namespace AutoReservation.UI
                 success = int.TryParse(AutoBasistarif.Text, out basistarif);
                 if (!success)
                 {
-                    tagestarif = 0;
-                    MessageBox.Show("Fehler beim Lesen des Tagestarifs. Er wurde auf einen Standardwert gesetzt", "Fehler",
-                        MessageBoxButton.OK);
+                    throw new FormatException("Fehler beim lesen des Basistarifs");
                 }
             }
             return new AutoDto
@@ -141,7 +139,12 @@ namespace AutoReservation.UI
         //Checks which car is selected and returns the proper DTO
         private AutoDto GetSelectedAuto()
         {
+
             int index = listAutos.SelectedIndex;
+            if (index < 0)
+            {
+                throw new FieldAccessException("Es ist kein Eintrag selektiert");
+            }
             return Model.Autos.ElementAt(index); //Die index von selected und Autos ist gleich weil sie gebindet sind.
 
         }
@@ -151,22 +154,55 @@ namespace AutoReservation.UI
         //Auto adden:
         private void AutoAddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            AutoDto autoToAdd = loadFromAutoForm();
-            Model.service.InsertAuto(autoToAdd);
-            Model.Autos.Add(autoToAdd);
+            try
+            {
+
+
+                AutoDto autoToAdd = loadFromAutoForm();
+                AutoDto addedAuto = Model.service.InsertAuto(autoToAdd); 
+   
+                Model.Autos.Add(addedAuto);
+                //OLD:
+                //listAutos.DataContext = null;
+                //listAutos.DataContext = Model.Autos;
+
+                //DEBUG:
+                //Model.showMyData();
+
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
+
         }
 
 
         //Auto removen:
         private void AutoRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
 
-                AutoDto targetAutoToDelete = GetSelectedAuto();
-                Model.service.DeleteAuto(targetAutoToDelete);
-                Model.Autos.Remove(targetAutoToDelete);
+                    AutoDto targetAutoToDelete = GetSelectedAuto();
+                    Model.service.DeleteAuto(targetAutoToDelete);
+                    Model.Autos.Remove(targetAutoToDelete);
+                }
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -174,33 +210,59 @@ namespace AutoReservation.UI
         //Auto updaten:
         private void AutoSaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            AutoDto targetAutoToUpdate = GetSelectedAuto();
-            AutoDto newAuto = loadFromAutoForm();
 
-            //totaler gurkencode, ist mir aber egal
-            //Die Idee mit einem Member "selectedCar" war schon nicht schlecht, aber eig müsste man eh ein Binding machen...
-            targetAutoToUpdate.AutoKlasse = newAuto.AutoKlasse;
-            targetAutoToUpdate.Marke = newAuto.Marke;
-            targetAutoToUpdate.Basistarif = newAuto.Basistarif;
-            targetAutoToUpdate.Tagestarif = newAuto.Tagestarif;
-            Model.service.UpdateAuto(targetAutoToUpdate);
-            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
-            Model.Autos.Remove(targetAutoToUpdate);
-            Model.Autos.Add(newAuto);
+            try
+            {
+                AutoDto targetAutoToUpdate = GetSelectedAuto();
+                AutoDto newAuto = loadFromAutoForm();
+
+                //totaler gurkencode, ist mir aber egal
+                //Die Idee mit einem Member "selectedCar" war schon nicht schlecht, aber eig müsste man eh ein Binding machen...
+                targetAutoToUpdate.AutoKlasse = newAuto.AutoKlasse;
+                targetAutoToUpdate.Marke = newAuto.Marke;
+                targetAutoToUpdate.Basistarif = newAuto.Basistarif;
+                targetAutoToUpdate.Tagestarif = newAuto.Tagestarif;
+                AutoDto updatedAuto = Model.service.UpdateAuto(targetAutoToUpdate);
+                //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas --> Done
+                //Mache es hier the simple way. Wie gesagt, sehr gurkig.
+                Model.Autos.Remove(targetAutoToUpdate);
+                Model.Autos.Add(updatedAuto);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
+
         }
+
 
 
         private void AutoSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            AutoDto selectedCar = GetSelectedAuto();
-            loadIntoAutoForm(selectedCar);
+            try
+            {
+                AutoDto selectedCar = GetSelectedAuto();
+                loadIntoAutoForm(selectedCar);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+
         }
 
 
 
 
-        /////////////////////////////////////////////Number only in Basistarfi und Tagestarif
+        /////////////////////////////////////////////Number and Dot only for number / date Fields
 
 
         private void OnKeyDown(object o, KeyEventArgs a)
@@ -220,6 +282,7 @@ namespace AutoReservation.UI
                 case Key.D9:
                 case Key.D0:
                 case Key.Back:
+                case Key.OemPeriod:
                     break;
 
                 default:
@@ -240,7 +303,14 @@ namespace AutoReservation.UI
             string vorname = KundeVorname.Text;
             string nachname = KundeNachname.Text;
             string gebdatText = KundeGeburtsdatum.Text;
-            DateTime gebdat = DateTime.Parse(gebdatText);
+            DateTime gebdat;
+
+            bool success = DateTime.TryParse(gebdatText, out gebdat);
+            if (!success)
+            {
+                throw new FormatException("Konnte das Geburtsdatum nicht lesen");
+            }
+
 
             return new KundeDto
             {
@@ -263,6 +333,10 @@ namespace AutoReservation.UI
         private KundeDto GetSelectedKunde()
         {
             int index = listKunden.SelectedIndex;
+            if (index < 0)
+            {
+                throw new FieldAccessException("Es ist kein Eintrag selektiert");
+            }
             return Model.Kunden.ElementAt(index); //Die index von selected und Kunden ist gleich weil sie gebindet sind.
 
         }
@@ -272,21 +346,43 @@ namespace AutoReservation.UI
         //Kunde adden:
         private void KundeAddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            KundeDto kundeToAdd = loadFromKundeForm();
-            Model.service.InsertKunde(kundeToAdd);
-            Model.Kunden.Add(kundeToAdd);
+            try
+            {
+                KundeDto kundeToAdd = loadFromKundeForm();
+                KundeDto addedKunde = Model.service.InsertKunde(kundeToAdd);
+                Model.Kunden.Add(addedKunde);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
         }
 
 
         //Kunde removen:
         private void KundeRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
-                KundeDto targetKundeToDelete = GetSelectedKunde();
-                Model.service.DeleteKunde(targetKundeToDelete);
-                Model.Kunden.Remove(targetKundeToDelete);
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    KundeDto targetKundeToDelete = GetSelectedKunde();
+                    Model.service.DeleteKunde(targetKundeToDelete);
+                    Model.Kunden.Remove(targetKundeToDelete);
+                }
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -294,26 +390,52 @@ namespace AutoReservation.UI
         //Kunde updaten:
         private void KundeSaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            KundeDto targetKundeToUpdate = GetSelectedKunde();
-            KundeDto newKunde = loadFromKundeForm();
+            try
+            {
+                KundeDto targetKundeToUpdate = GetSelectedKunde();
+                KundeDto newPseudoKunde = loadFromKundeForm();
 
-            //totaler gurkencode again
-            targetKundeToUpdate.Nachname = newKunde.Nachname;
-            targetKundeToUpdate.Vorname = newKunde.Vorname;
-            targetKundeToUpdate.Geburtsdatum = newKunde.Geburtsdatum;
-            Model.service.UpdateKunde(targetKundeToUpdate);
+                //totaler gurkencode again
+                targetKundeToUpdate.Nachname = newPseudoKunde.Nachname;
+                targetKundeToUpdate.Vorname = newPseudoKunde.Vorname;
+                targetKundeToUpdate.Geburtsdatum = newPseudoKunde.Geburtsdatum;
+                KundeDto updatedKunde = Model.service.UpdateKunde(targetKundeToUpdate);
 
-            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
-            Model.Kunden.Remove(targetKundeToUpdate);
-            Model.Kunden.Add(newKunde);
+                //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
+                //Mache es hier the simple way. Wie gesagt, sehr gurkig.Aber nur so erfährt das UI vom Timestamp Change.
+                Model.Kunden.Remove(targetKundeToUpdate);
+                Model.Kunden.Add(updatedKunde);
+                
+
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
+
         }
 
 
         private void KundeSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            KundeDto selectedKunde = GetSelectedKunde();
-            loadIntoKundeForm(selectedKunde);
+            try
+            {
+                KundeDto selectedKunde = GetSelectedKunde();
+                loadIntoKundeForm(selectedKunde);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+
         }
 
 
@@ -332,8 +454,22 @@ namespace AutoReservation.UI
 
             string vonDatText = ResVon.Text;
             string bisDatText = ResBis.Text;
-            DateTime vonDat = DateTime.Parse(vonDatText);
-            DateTime bisDat = DateTime.Parse(bisDatText);
+            DateTime vonDat;
+            DateTime bisDat;
+
+            bool success = DateTime.TryParse(vonDatText, out vonDat);
+
+            if (!success)
+            {
+                throw new FormatException("Meine Intelligenz reicht nicht aus, das VON-Datum zu lesen.");
+            }
+
+            success = DateTime.TryParse(bisDatText, out bisDat);
+            if (!success)
+            {
+                throw new FormatException("BIS Datum.... isch en Chabis! Hmm, lecker Kabis.");
+            }
+
 
             KundeDto k = ResKunde.SelectionBoxItem as KundeDto;
             AutoDto a = ResAuto.SelectionBoxItem as AutoDto;
@@ -361,6 +497,10 @@ namespace AutoReservation.UI
         private ReservationDto GetSelectedReservation()
         {
             int index = listReservationen.SelectedIndex;
+            if (index < 0)
+            {
+                throw new FieldAccessException("Es ist kein Eintrag selektiert");
+            }
             return Model.Reservation.ElementAt(index); //Die index von selected und Kunden ist gleich weil sie gebindet sind.
 
         }
@@ -370,11 +510,17 @@ namespace AutoReservation.UI
         // adden:
         private void ReservationAddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ReservationDto reservationToAdd = loadFromReservationForm();
+
             try
             {
-                Model.service.InsertReservation(reservationToAdd);
-                Model.Reservation.Add(reservationToAdd);
+               
+                ReservationDto reservationToAdd = loadFromReservationForm();
+                ReservationDto addedReservation = Model.service.InsertReservation(reservationToAdd);
+                Model.Reservation.Add(addedReservation);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
             }
             catch (FaultException<AutoUnavailableFault> ex)
             {
@@ -391,6 +537,10 @@ namespace AutoReservation.UI
                     "Fault!",
                     MessageBoxButton.OK);
 
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
             catch (Exception ex)
             {
@@ -406,12 +556,23 @@ namespace AutoReservation.UI
         // removen:
         private void ReservationRemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
-                ReservationDto targetResToDelete = GetSelectedReservation();
-                Model.service.DeleteReservation(targetResToDelete);
-                Model.Reservation.Remove(targetResToDelete);
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    ReservationDto targetResToDelete = GetSelectedReservation();
+                    Model.service.DeleteReservation(targetResToDelete);
+                    Model.Reservation.Remove(targetResToDelete);
+                }
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
             }
 
         }
@@ -419,20 +580,36 @@ namespace AutoReservation.UI
         // updaten:
         private void ReservationSaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ReservationDto targetReservationToUpdate = GetSelectedReservation();
-            ReservationDto newReservation = loadFromReservationForm();
 
-
-
-            //alte reservation löschen, und neue hinzufügen. sonst gibt es auto unavailable exc.
+            //alte reservation löschen, und neue hinzufügen. ist simpler als update (Auto Unavailble Exception würde den Fall aber berücksichtigen!)
             try
             {
-                Model.service.DeleteReservation(targetReservationToUpdate);
-                Model.service.InsertReservation(newReservation);
-                Model.Reservation.Remove(targetReservationToUpdate); //TODO PRoperty Changed implementieren
-                Model.Reservation.Add(newReservation);
-            }
+                ReservationDto targetReservationToUpdate = GetSelectedReservation();
+                ReservationDto newReservation = loadFromReservationForm();
 
+                targetReservationToUpdate.Von = newReservation.Von;
+                targetReservationToUpdate.Bis = newReservation.Bis;
+                targetReservationToUpdate.Kunde = newReservation.Kunde;
+                targetReservationToUpdate.Auto = newReservation.Auto;
+
+                ReservationDto updatedReservation = Model.service.UpdateReservation(targetReservationToUpdate);
+
+                //Model.Reservation.Remove(targetReservationToUpdate);
+                //Model.Reservation.Add(newReservation);
+
+                //Alte Version --> War nicht kommentiert und hat die Concurrency Exception verursacht.
+                Model.Reservation.Remove(targetReservationToUpdate);
+                Model.Reservation.Add(updatedReservation);
+
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
             catch (FaultException<AutoUnavailableFault> ex)
             {
                 string msg = ex.Detail.Message;
@@ -449,6 +626,11 @@ namespace AutoReservation.UI
                     MessageBoxButton.OK);
 
             }
+
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
             catch (Exception ex)
             {
                 string msg = ex.Message;
@@ -457,18 +639,7 @@ namespace AutoReservation.UI
                     MessageBoxButton.OK);
             }
 
-            /*
 
-            //totaler gurkencode again
-            targetReservationToUpdate.Von = newReservation.Von;
-            targetReservationToUpdate.Bis = newReservation.Bis;
-            targetReservationToUpdate.Kunde = newReservation.Kunde;
-            targetReservationToUpdate.Auto = newReservation.Auto;
-            Model.service.UpdateReservation(targetReservationToUpdate);
-            //Property Changed Dings... DTO müsste INotifyPropertyChanged implementieren oder sowas
-            //Mache es hier the simple way. Wie gesagt, sehr gurkig.
-
-    */
 
 
         }
@@ -476,8 +647,19 @@ namespace AutoReservation.UI
 
         private void ReservationSelectedListBox_OnMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ReservationDto selectedRes = GetSelectedReservation();
-            loadIntoReservationForm(selectedRes);
+            try
+            {
+                ReservationDto selectedRes = GetSelectedReservation();
+                loadIntoReservationForm(selectedRes);
+            }
+            catch (FieldAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButton.OK);
+            }
+            catch (FaultException<OptimisticConcurrencyFault> ex)
+            {
+                MessageBox.Show(ex.Detail.Message, "Fehler", MessageBoxButton.OK);
+            }
         }
 
 
