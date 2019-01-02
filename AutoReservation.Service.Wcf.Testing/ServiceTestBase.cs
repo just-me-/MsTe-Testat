@@ -191,9 +191,11 @@ namespace AutoReservation.Service.Wcf.Testing
             var upd = Target.GetReservationDtoById(1);
             upd.Von = new DateTime(2005, 1, 1);
             upd.Kunde = Target.GetKundeDtoById(4);
-            Target.UpdateReservation(upd);
+            ReservationDto updated = Target.UpdateReservation(upd);
             Assert.Equal(new DateTime(2005, 1, 1), Target.GetReservationDtoById(1).Von);
-            Assert.Equal(Target.GetKundeDtoById(4), Target.GetReservationDtoById(1).Kunde);
+            
+            Assert.Equal(Target.GetKundeDtoById(4).Id, Target.GetReservationDtoById(1).Kunde.Id);
+
         }
 
         #endregion
@@ -301,7 +303,7 @@ namespace AutoReservation.Service.Wcf.Testing
         //[Fact]
         //public void CheckAvailabilityIsFalseTest()
         //{
-        //    throw new NotImplementedException("Test not implemented.");
+        //    throw new NotImpleme ntedException("Test not implemented.");
         //}
 
         //#endregion
